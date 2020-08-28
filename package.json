@@ -1,0 +1,22 @@
+{
+  "name": "cinema-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matthew-Van-Hecke/cinema-website.git"
+  },
+  "author": "Matthew Van Hecke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matthew-Van-Hecke/cinema-website/issues"
+  },
+  "homepage": "https://github.com/Matthew-Van-Hecke/cinema-website#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
