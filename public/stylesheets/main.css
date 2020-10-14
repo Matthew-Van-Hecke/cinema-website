@@ -1,0 +1,26 @@
+.navbar-nav {
+    width: 100%;
+    padding-top: 130px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.navbar {
+    height: 110px;
+    perspective: 500px;
+}
+
+.nav-item {
+    font-size: 1.5em;
+}
+
+#towne-cinema-logo {
+    height: 180px;
+    transform: translateY(-50px);
+    transition: all 0.7s;
+}
+
+#towne-cinema-logo:hover {
+    transform: translateY(-50px) rotateZ(-20deg) translateZ(50px);
+    transform-origin: center;
+}
