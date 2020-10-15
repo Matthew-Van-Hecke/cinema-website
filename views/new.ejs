@@ -1,0 +1,11 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container">
+    <form action="/new" method="post">
+        <input type="text" name="title" id="movie-title">
+        <input type="file" name="banner" id="movie-banner">
+        <input type="submit">
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>
