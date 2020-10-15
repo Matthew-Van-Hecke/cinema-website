@@ -1,10 +1,14 @@
 const express = require('express');
-const fetch = require('fetch');
+const { urlencoded } = require('body-parser');
+const upload = require('express-fileupload');
 
 const app = express();
 
+
 app.set("view engine", "ejs");
+app.use(urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(upload());
 
 app.get('/', (req, res) => {
     const imgUrls = ["https://www.towne-cinema.com/wp-content/uploads/2020/08/tenetbanner.jpg", 
@@ -19,8 +23,16 @@ app.get('/new', (req, res) => {
 });
 //CREATE
 app.post('/new', (req, res) => {
-    let title = req.body.title;
-    console.log(title);
+    if(req.files){
+        let banner = req.files.banner;
+        banner.mv('./public/media/banners/' + banner.name, (err) => {
+            if(err){
+                console.log(err);
+            } else {
+                console.log("File Uploaded");
+            }
+        });
+    }
     res.redirect('/');
 });
 

@@ -1,7 +1,7 @@
 <%- include("partials/header.ejs") %>
 
 <div class="container">
-    <form action="/new" method="post">
+    <form action="/new" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="movie-title">
         <input type="file" name="banner" id="movie-banner">
         <input type="submit">
