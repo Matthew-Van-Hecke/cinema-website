@@ -1,2 +1,4 @@
 node_modules/
 APIKeys.js
+public/media/banners/*
+public/media/posters/*

@@ -3,6 +3,8 @@ const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 
+const Movie = require('./models/movie');
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -26,6 +28,7 @@ app.get('/new', (req, res) => {
 //CREATE
 app.post('/new', (req, res) => {
     if(req.files){
+        let title = req.body.title;
         let banner = req.files.banner;
         let bannerPath = './public/media/banners/' + banner.name;
         banner.mv(bannerPath, (err) => {
@@ -33,6 +36,13 @@ app.post('/new', (req, res) => {
                 console.log(err);
             } else {
                 console.log("File Uploaded");
+            }
+        });
+        Movie.create({title: title, bannerUrl: bannerPath}, (err, newMovie) => {
+            if(err){
+                console.log(err);
+            } else {
+                console.log(newMovie);
             }
         });
     }
