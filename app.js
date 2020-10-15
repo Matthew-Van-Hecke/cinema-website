@@ -1,14 +1,16 @@
 const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
+const mongoose = require('mongoose');
 
 const app = express();
-
 
 app.set("view engine", "ejs");
 app.use(urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(upload());
+
+mongoose.connect("mongodb://localhost/cinema-website", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.get('/', (req, res) => {
     const imgUrls = ["https://www.towne-cinema.com/wp-content/uploads/2020/08/tenetbanner.jpg", 
@@ -25,7 +27,8 @@ app.get('/new', (req, res) => {
 app.post('/new', (req, res) => {
     if(req.files){
         let banner = req.files.banner;
-        banner.mv('./public/media/banners/' + banner.name, (err) => {
+        let bannerPath = './public/media/banners/' + banner.name;
+        banner.mv(bannerPath, (err) => {
             if(err){
                 console.log(err);
             } else {
