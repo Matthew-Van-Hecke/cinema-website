@@ -19,14 +19,11 @@ app.get('/', (req, res) => {
         if(err){
             console.log(err);
         } else {
-            let imgUrls = allMovies.map(m => `.${m.bannerUrl}`);
-            console.log(imgUrls);
-            res.render("home", {imgUrls});
+            // let imgUrls = allMovies.map(m => `.${m.bannerUrl}`);
+            console.log(allMovies);
+            res.render("home", {allMovies});
         }
     });
-    // const imgUrls = ["https://www.towne-cinema.com/wp-content/uploads/2020/08/tenetbanner.jpg", 
-    //     "https://www.towne-cinema.com/wp-content/uploads/2020/10/cocowebban.jpg", 
-    //     "https://www.towne-cinema.com/wp-content/uploads/2020/10/ththingwebban.jpg"]; 
 });
 
 //NEW
@@ -56,6 +53,13 @@ app.post('/new', (req, res) => {
         });
     }
     res.redirect('/');
+});
+//SHOW
+app.get("/movie-details/:id", (req, res) => {
+    Movie.findById(req.params.id, (err, foundMovie) => {
+        console.log(foundMovie);
+        res.render("movie-details");
+    });
 });
 
 app.listen(3000, () => {
