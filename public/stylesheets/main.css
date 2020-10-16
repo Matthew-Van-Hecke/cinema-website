@@ -27,6 +27,10 @@
     transform-origin: center;
 }
 
-.container form {
-    padding-top: 100px;;
+.container.main-content {
+    padding-top: 75px;;
+}
+
+#image-on-details-view {
+    width: 100%;
 }

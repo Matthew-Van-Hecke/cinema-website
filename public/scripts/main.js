@@ -1,3 +1,7 @@
+// window.onbeforeunload = function() {
+//     return "Are you sure you want to leave this page?";
+// }
+
 function addShowtime(){
     let showtimesDiv = document.getElementById("showtimes-div");
     let newShowtimeInput = createShowtimeInput(showtimesDiv.children.length);

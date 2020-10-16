@@ -2,6 +2,7 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
+const {stringArrayToDateArray, stringToDate} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 
@@ -19,7 +20,6 @@ app.get('/', (req, res) => {
         if(err){
             console.log(err);
         } else {
-            // let imgUrls = allMovies.map(m => `.${m.bannerUrl}`);
             console.log(allMovies);
             res.render("home", {allMovies});
         }
@@ -68,6 +68,7 @@ app.post('/new', (req, res) => {
 app.get("/movie-details/:id", (req, res) => {
     Movie.findById(req.params.id, (err, foundMovie) => {
         console.log(foundMovie);
+        foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
         res.render("movie-details", {foundMovie});
     });
 });
