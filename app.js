@@ -15,10 +15,18 @@ app.use(upload());
 mongoose.connect("mongodb://localhost/cinema-website", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.get('/', (req, res) => {
-    const imgUrls = ["https://www.towne-cinema.com/wp-content/uploads/2020/08/tenetbanner.jpg", 
-        "https://www.towne-cinema.com/wp-content/uploads/2020/10/cocowebban.jpg", 
-        "https://www.towne-cinema.com/wp-content/uploads/2020/10/ththingwebban.jpg"];
-    res.render("home", {imgUrls});
+    Movie.find({}, (err, allMovies) => {
+        if(err){
+            console.log(err);
+        } else {
+            let imgUrls = allMovies.map(m => `.${m.bannerUrl}`);
+            console.log(imgUrls);
+            res.render("home", {imgUrls});
+        }
+    });
+    // const imgUrls = ["https://www.towne-cinema.com/wp-content/uploads/2020/08/tenetbanner.jpg", 
+    //     "https://www.towne-cinema.com/wp-content/uploads/2020/10/cocowebban.jpg", 
+    //     "https://www.towne-cinema.com/wp-content/uploads/2020/10/ththingwebban.jpg"]; 
 });
 
 //NEW
@@ -30,15 +38,16 @@ app.post('/new', (req, res) => {
     if(req.files){
         let title = req.body.title;
         let banner = req.files.banner;
-        let bannerPath = './public/media/banners/' + banner.name;
-        banner.mv(bannerPath, (err) => {
+        let bannerFindPath = '/media/banners/' + banner.name;
+        let bannerSavePath = './public' + bannerFindPath;
+        banner.mv(bannerSavePath, (err) => {
             if(err){
                 console.log(err);
             } else {
                 console.log("File Uploaded");
             }
         });
-        Movie.create({title: title, bannerUrl: bannerPath}, (err, newMovie) => {
+        Movie.create({title: title, bannerUrl: bannerFindPath}, (err, newMovie) => {
             if(err){
                 console.log(err);
             } else {
