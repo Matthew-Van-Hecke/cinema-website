@@ -2,10 +2,14 @@
 
 <div class="container">
     <form action="/new" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" id="movie-title">
-        <input type="file" name="banner" id="movie-banner">
-        <input type="submit">
+        <input class="form-control" type="text" name="title" id="movie-title">
+        <input class="form-control" type="file" name="banner" id="movie-banner">
+        <div class="form-group" id="showtimes-div">
+            
+        </div>
+        <input class="form-control" type="submit">
     </form>
+    <button onclick="addShowtime()">Add Showtime</button>
 </div>
 
 <%- include("partials/footer.ejs") %>

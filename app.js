@@ -37,6 +37,16 @@ app.post('/new', (req, res) => {
         let banner = req.files.banner;
         let bannerFindPath = '/media/banners/' + banner.name;
         let bannerSavePath = './public' + bannerFindPath;
+        let showtimes = [];
+        for(let i = 0; true; i++){
+            let showtime = req.body["showtime-" + i];
+            if(showtime){
+                showtimes.push(showtime);
+            } else {
+                break;
+            }
+        }
+        console.log(showtimes);
         banner.mv(bannerSavePath, (err) => {
             if(err){
                 console.log(err);
@@ -44,7 +54,7 @@ app.post('/new', (req, res) => {
                 console.log("File Uploaded");
             }
         });
-        Movie.create({title: title, bannerUrl: bannerFindPath}, (err, newMovie) => {
+        Movie.create({title: title, bannerUrl: bannerFindPath, showtimes}, (err, newMovie) => {
             if(err){
                 console.log(err);
             } else {
