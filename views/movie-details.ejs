@@ -1,3 +1,8 @@
 <%- include("partials/header.ejs") %>
 
+    <div class="movie-details">
+        <h2><%= foundMovie.title %></h2>
+        <img src="<%= foundMovie.bannerUrl %>" alt="<%= foundMovie.title %>">
+    </div>
+
 <%- include("partials/footer.ejs") %>

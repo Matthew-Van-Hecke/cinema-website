@@ -58,7 +58,7 @@ app.post('/new', (req, res) => {
 app.get("/movie-details/:id", (req, res) => {
     Movie.findById(req.params.id, (err, foundMovie) => {
         console.log(foundMovie);
-        res.render("movie-details");
+        res.render("movie-details", {foundMovie});
     });
 });
 
