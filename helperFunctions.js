@@ -8,7 +8,7 @@ function stringToDate(dateString){
 
 function generateShowtimesCard({title, posterUrl: imgUrl, showtimes}){
     let columnOne = generateWrapperElement("div", "col-md-6", `<img src="${imgUrl}" alt="${title}">`);
-    let showtimesString = showtimes.map(showtime => `\n<li>${showtime}</li>`).join("");
+    let showtimesString = showtimes.map(showtime => `\n<li>${new Date(showtime)}</li>`).join("");
     let showtimesUl = generateWrapperElement("ul", "showtimes-list", showtimesString);
     let columnTwo = generateWrapperElement("div", "col-md-6", showtimesUl);
     let titleElement = generateWrapperElement("h4", "movie-showtime-title", title);
