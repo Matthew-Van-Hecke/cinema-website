@@ -14,21 +14,26 @@
     font-size: 1.5em;
 }
 
+#home-link{
+    transform: translateY(-50px);
+    perspective: 500px;
+}
+
 #cinema-logo {
     height: 180px;
-    transform: translateY(-50px);
+    /* transform: translateY(-50px); */
     border-radius: 100%;
     border: 1px solid #444444;
     transition: all 0.7s;
 }
 
 #cinema-logo:hover {
-    transform: translateY(-50px) rotateZ(-20deg) translateZ(50px);
+    transform: rotateZ(-20deg) translateZ(50px) translateZ(50px);
     transform-origin: center;
 }
 
 .container.main-content {
-    padding-top: 75px;;
+    padding-top: 90px;;
 }
 
 #image-on-details-view {
@@ -40,5 +45,5 @@
 }
 
 .showtimes-card img {
-    width: 80%;
+    width:15em
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
-const {stringArrayToDateArray, generateShowtimesCard} = require('./helperFunctions');
+const {stringArrayToDateArray, generateShowtimesCard, moveFile} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 
@@ -35,8 +35,11 @@ app.post('/new', (req, res) => {
     if(req.files){
         let title = req.body.title;
         let banner = req.files.banner;
+        let poster = req.files.poster;
         let bannerFindPath = '/media/banners/' + banner.name;
         let bannerSavePath = './public' + bannerFindPath;
+        let posterFindPath = '/media/posters/' + poster.name;
+        let posterSavePath = './public' + posterFindPath;
         let showtimes = [];
         for(let i = 0; true; i++){
             let showtime = req.body["showtime-" + i];
@@ -47,14 +50,16 @@ app.post('/new', (req, res) => {
             }
         }
         console.log(showtimes);
-        banner.mv(bannerSavePath, (err) => {
-            if(err){
-                console.log(err);
-            } else {
-                console.log("File Uploaded");
-            }
-        });
-        Movie.create({title: title, bannerUrl: bannerFindPath, showtimes}, (err, newMovie) => {
+        moveFile(banner, bannerSavePath);
+        moveFile(poster, posterSavePath);
+        // banner.mv(bannerSavePath, (err) => {
+        //     if(err){
+        //         console.log(err);
+        //     } else {
+        //         console.log("File Uploaded");
+        //     }
+        // });
+        Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes}, (err, newMovie) => {
             if(err){
                 console.log(err);
             } else {

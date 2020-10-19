@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const movieSchema = new mongoose.Schema({
     title: String,
     bannerUrl: String,
+    posterUrl: String,
     showtimes: [
         String
     ]

@@ -1,15 +1,22 @@
 <%- include("partials/header.ejs") %>
 
-<div class="container">
+<!-- <div class="container"> -->
     <form action="/new" method="post" enctype="multipart/form-data">
         <input class="form-control" type="text" name="title" id="movie-title">
-        <input class="form-control" type="file" name="banner" id="movie-banner">
+        <div class="form-group">
+            <label for="movie-banner">Banner Image</label>
+            <input class="form-control" type="file" name="banner" id="movie-banner">
+        </div>
+        <div class="form-group">
+            <label for="movie-poster">Poster Image</label>
+            <input class="form-control" type="file" name="poster" id="movie-poster">
+        </div>
         <div class="form-group" id="showtimes-div">
             
         </div>
         <input class="form-control" type="submit">
     </form>
     <button onclick="addShowtime()">Add Showtime</button>
-</div>
+<!-- </div> -->
 
 <%- include("partials/footer.ejs") %>
