@@ -1,0 +1,7 @@
+<%- include("partials/header.ejs") %>
+
+<h1>Showtimes</h1>
+<% allMovies.forEach(movie => { %>
+    <%- generateShowtimesCard(movie) %> 
+<% }) %>
+<%- include("partials/footer.ejs") %>

@@ -34,3 +34,11 @@
 #image-on-details-view {
     width: 100%;
 }
+
+.showtimes-card {
+    border: 2px solid red;
+}
+
+.showtimes-card img {
+    width: 80%;
+}

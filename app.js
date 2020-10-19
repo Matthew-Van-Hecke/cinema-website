@@ -2,7 +2,7 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
-const {stringArrayToDateArray, stringToDate} = require('./helperFunctions');
+const {stringArrayToDateArray, generateShowtimesCard} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 
@@ -70,6 +70,16 @@ app.get("/movie-details/:id", (req, res) => {
         console.log(foundMovie);
         foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
         res.render("movie-details", {foundMovie});
+    });
+});
+app.get("/showtimes", (req, res) => {
+    Movie.find({}, (err, allMovies) => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(allMovies);
+            res.render("showtimes", {allMovies, generateShowtimesCard});
+        }
     });
 });
 
