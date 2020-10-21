@@ -2,7 +2,8 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
-const {stringArrayToDateArray, generateShowtimesCard, moveFile} = require('./helperFunctions');
+const methodOverride = require('method-override');
+const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 
@@ -12,6 +13,7 @@ app.set("view engine", "ejs");
 app.use(urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(upload());
+app.use(methodOverride('_method'));
 
 mongoose.connect("mongodb://localhost/cinema-website", {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -40,25 +42,10 @@ app.post('/new', (req, res) => {
         let bannerSavePath = './public' + bannerFindPath;
         let posterFindPath = '/media/posters/' + poster.name;
         let posterSavePath = './public' + posterFindPath;
-        let showtimes = [];
-        for(let i = 0; true; i++){
-            let showtime = req.body["showtime-" + i];
-            if(showtime){
-                showtimes.push(showtime);
-            } else {
-                break;
-            }
-        }
+        let showtimes = getShowtimesArray(req.body);
         console.log(showtimes);
         moveFile(banner, bannerSavePath);
         moveFile(poster, posterSavePath);
-        // banner.mv(bannerSavePath, (err) => {
-        //     if(err){
-        //         console.log(err);
-        //     } else {
-        //         console.log("File Uploaded");
-        //     }
-        // });
         Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes}, (err, newMovie) => {
             if(err){
                 console.log(err);
@@ -70,11 +57,14 @@ app.post('/new', (req, res) => {
     res.redirect('/');
 });
 //SHOW
-app.get("/movie-details/:id", (req, res) => {
+app.get("/movies/:id", (req, res) => {
     Movie.findById(req.params.id, (err, foundMovie) => {
-        console.log(foundMovie);
-        foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
-        res.render("movie-details", {foundMovie});
+        if(err){
+            console.log(err);
+        } else {
+            foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
+            res.render("movie-details", {foundMovie});
+        }
     });
 });
 app.get("/showtimes", (req, res) => {
@@ -84,6 +74,30 @@ app.get("/showtimes", (req, res) => {
         } else {
             console.log(allMovies);
             res.render("showtimes", {allMovies, generateShowtimesCard});
+        }
+    });
+});
+// EDIT
+app.get("/movies/:id/edit", (req, res) => {
+    Movie.findById(req.params.id, (err, foundMovie) => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(foundMovie);
+            // foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
+            res.render("edit", {foundMovie});
+        }
+    });
+});
+// UPDATE
+app.put("/movies/:id", (req, res) => {
+    const showtimes = getShowtimesArray(req.body);
+    const newData = {title: req.body.title, showtimes};
+    Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false}, (err, movie) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect(`/movies/${req.body.id}`);
         }
     });
 });

@@ -31,5 +31,17 @@ function moveFile(object, savePath){
     });
 }
 
+function getShowtimesArray(formData){
+    const showtimes = [];
+    for(let i = 0; true; i++){
+        let showtime = formData["showtime-" + i];
+        if(showtime){
+            showtimes.push(showtime);
+        } else {
+            break;
+        }
+    }
+    return showtimes;
+}
 
-module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile};
+module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray};
