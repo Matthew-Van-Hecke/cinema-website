@@ -36,6 +36,7 @@ function getShowtimesArray(formData){
     for(let i = 0; true; i++){
         let showtime = formData["showtime-" + i];
         if(showtime){
+            console.log(showtime);
             showtimes.push(showtime);
         } else {
             break;

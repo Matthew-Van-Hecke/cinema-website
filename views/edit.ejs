@@ -14,8 +14,10 @@
     </div> -->
     <div class="form-group" id="showtimes-div">
         <% foundMovie.showtimes.forEach((showtime, i) => { %>
-            <input type="datetime-local" name="showtime-<%= i %>" value="<%= showtime %>">
-            <p><%= showtime %></p>
+            <div class="showtime form-control" id="showtime-<%= i %>">
+                <button type="button" onclick="">X</button>
+                <input type="datetime-local" name="showtime-<%= i %>" value="<%= showtime %>">
+            </div>
         <% }) %>
     </div>
     <input class="form-control" type="submit">
