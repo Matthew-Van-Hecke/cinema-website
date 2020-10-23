@@ -10,8 +10,8 @@ function generateShowtimesCard({title, posterUrl: imgUrl, showtimes, id}){
     let columnOne = generateWrapperElement("div", "col-md-6", `<img src="${imgUrl}" alt="${title}">`);
     let showtimesString = showtimes.map(showtime => `\n<li>${new Date(showtime)}</li>`).join("");
     let showtimesUl = generateWrapperElement("ul", "showtimes-list", showtimesString);
-    let deleteForm = `\n<form action="/movies/${id}?_method=DELETE" method="post"><button>Delete Movie</button></form>`;
-    let columnTwo = generateWrapperElement("div", "col-md-6", `${showtimesUl}${deleteForm}`);
+    // let deleteForm = `\n<form action="/movies/${id}?_method=DELETE" method="post"><button>Delete Movie</button></form>`;
+    let columnTwo = generateWrapperElement("div", "col-md-6", showtimesUl);
     let titleElement = generateWrapperElement("h4", "movie-showtime-title", title);
     let row = generateWrapperElement("div", "row", `${columnOne}\n${columnTwo}`);
     let showtimeCard = generateWrapperElement("div", "showtimes-card", `${titleElement}\n${row}`);

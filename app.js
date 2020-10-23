@@ -108,7 +108,9 @@ app.delete("/movies/:id", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            fs.unlink(`public/${movie.bannerUrl}`, () => console.log("Removed banner image"));
+            fs.unlink(`public/${movie.bannerUrl}`, () => {
+                console.log("Removed banner image");
+            });
             fs.unlink(`public/${movie.posterUrl}`, () => {
                 console.log("Removed poster image");
                 Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false}, (err) => {
