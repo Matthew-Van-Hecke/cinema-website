@@ -2,6 +2,7 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
+const fs = require("fs");
 const methodOverride = require('method-override');
 const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray} = require('./helperFunctions');
 
@@ -103,11 +104,21 @@ app.put("/movies/:id", (req, res) => {
 });
 // DESTROY
 app.delete("/movies/:id", (req, res) => {
-    Movie.findByIdAndDelete(req.params.id, (err) => {
-        if(err) {
+    Movie.findById(req.params.id, (err, movie) => {
+        if(err){
             console.log(err);
         } else {
-            res.redirect("/showtimes");
+            fs.unlink(`public/${movie.bannerUrl}`, () => console.log("Removed banner image"));
+            fs.unlink(`public/${movie.posterUrl}`, () => {
+                console.log("Removed poster image");
+                Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false}, (err) => {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.redirect("/showtimes");
+                    }
+                });
+            });
         }
     });
 });
