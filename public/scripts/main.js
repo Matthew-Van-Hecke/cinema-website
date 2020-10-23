@@ -10,7 +10,6 @@ function addShowtime(){
 
 function createShowtimeInput(index){
     let inputElement = document.createElement("input");
-    // inputElement.classList.add("form-control");
     inputElement.setAttribute("type", "datetime-local");
     inputElement.setAttribute("name", "showtime-" + index);
     let removeButton = document.createElement("button");
@@ -36,10 +35,4 @@ function removeShowtime(id){
         elToUpdate.children[0].setAttribute("onclick", `removeShowtime(${i})`);
         elToUpdate.children[1].setAttribute("name", label);
     }
-    // parentDiv.children.forEach((containingDiv, i) => {
-    //     let label = "showtime-" + i;
-    //     let inputEl = containingDiv.children[1];
-    //     inputEl.setAttribute("name", label);
-    //     containingDiv.setAttribute("id", label);
-    // });
 }

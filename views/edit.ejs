@@ -15,7 +15,7 @@
     <div class="form-group" id="showtimes-div">
         <% foundMovie.showtimes.forEach((showtime, i) => { %>
             <div class="showtime form-control" id="showtime-<%= i %>">
-                <button type="button" onclick="">X</button>
+                <button type="button" <%= `onclick="removeShowtime(${i})"` %>>X</button>
                 <input type="datetime-local" name="showtime-<%= i %>" value="<%= showtime %>">
             </div>
         <% }) %>

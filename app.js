@@ -101,6 +101,16 @@ app.put("/movies/:id", (req, res) => {
         }
     });
 });
+// DESTROY
+app.delete("/movies/:id", (req, res) => {
+    Movie.findByIdAndDelete(req.params.id, (err) => {
+        if(err) {
+            console.log(err);
+        } else {
+            res.redirect("/showtimes");
+        }
+    });
+});
 
 app.listen(3000, () => {
     console.log("---Server is running---");
