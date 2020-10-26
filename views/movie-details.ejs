@@ -7,7 +7,7 @@
         <div class="col-md-6">
             <ul>
                 <% Object.keys(sortedShowtimes).forEach(showtimeDate => { %>
-                    <li><%= new Date(showtimeDate) %>
+                    <li><%= showtimeDate %>
                         <ul>
                             <% sortedShowtimes[showtimeDate].forEach(showtime => { %>
                                 <li><%= showtime %></li>

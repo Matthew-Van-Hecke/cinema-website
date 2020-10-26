@@ -47,9 +47,11 @@ function getShowtimesArray(formData){
 }
 
 function sortShowtimesByDate(showtimesArray){
+    showtimesArray.sort((a, b) => a.valueOf() - b.valueOf());
     const sortedShowtimes = {};
     for(let showtime of showtimesArray){
-        let date = showtime.toJSON().split("T")[0];
+        let date = showtime.toDateString();
+        date = expandDateString(date);
         if(!sortedShowtimes[date]){
             sortedShowtimes[date] = [];
         }
@@ -58,4 +60,73 @@ function sortShowtimesByDate(showtimesArray){
     return sortedShowtimes;
 }
 
-module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate};
+function expandDateString(dateString){
+    let [dayOfWeek, month, dayOfMonth, year] = dateString.split(" ");
+    return `${getDayOfWeek(dayOfWeek)}, ${getMonth(month)} ${parseInt(dayOfMonth)}, ${year}`;
+}
+
+function getMonth(abbreviation){
+    switch(abbreviation.toLowerCase()){
+        case "01":
+        case "jan":
+            return "January";
+        case "02":
+        case "feb":
+            return "February";
+        case "03":
+        case "mar":
+            return "March";
+        case "04":
+        case "apr":
+            return "April";
+        case "05":
+        case "may":
+            return "May";
+        case "06":
+        case "jun":
+            return "June";
+        case "07":
+        case "jul":
+            return "July";
+        case "08":
+        case "aug":
+            return "August";
+        case "09":
+        case "sep":
+            return "September";
+        case "10":
+        case "oct":
+            return "October";
+        case "11":
+        case "nov":
+            return "November";
+        case "12":
+        case "dec":
+            return "December";
+        default:
+            return "error";
+    }
+}
+
+function getDayOfWeek(abbreviation){
+    switch(abbreviation.toLowerCase()){
+        case "sun":
+            return "Sunday";
+        case "mon":
+            return "Monday";
+        case "tue":
+            return "Tuesday";
+        case "wed":
+            return "Wednesday";
+        case "thu":
+            return "Thursday";
+        case "fri":
+            return "Friday";
+        case "sat":
+            return "Saturday";
+        default:
+            return "error";
+    }
+}
+
+module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate, expandDateString};
