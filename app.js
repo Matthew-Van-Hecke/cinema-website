@@ -4,7 +4,7 @@ const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const fs = require("fs");
 const methodOverride = require('method-override');
-const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray} = require('./helperFunctions');
+const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 
@@ -60,11 +60,15 @@ app.post('/new', (req, res) => {
 //SHOW
 app.get("/movies/:id", (req, res) => {
     Movie.findById(req.params.id, (err, foundMovie) => {
+        // foundMovie.showtimes = sortShowtimesByDate(foundMovie.showtimes);
         if(err){
             console.log(err);
         } else {
-            foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
-            res.render("movie-details", {foundMovie});
+            let showtimes = stringArrayToDateArray(foundMovie.showtimes);
+            let sortedShowtimes = sortShowtimesByDate(showtimes);
+            foundMovie.showtimes = sortedShowtimes;
+            console.log(foundMovie.showtimes);
+            res.render("movie-details", {foundMovie, sortedShowtimes});
         }
     });
 });

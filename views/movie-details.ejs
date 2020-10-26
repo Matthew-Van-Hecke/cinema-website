@@ -6,8 +6,14 @@
         </div>
         <div class="col-md-6">
             <ul>
-                <% foundMovie.showtimes.forEach(showtime => { %>
-                    <li><%= showtime %></li>
+                <% Object.keys(sortedShowtimes).forEach(showtimeDate => { %>
+                    <li><%= new Date(showtimeDate) %>
+                        <ul>
+                            <% sortedShowtimes[showtimeDate].forEach(showtime => { %>
+                                <li><%= showtime %></li>
+                            <% }) %>
+                        </ul>
+                    </li>
                 <% }) %>
             </ul>
             <form action="/movies/<%= foundMovie.id %>?_method=DELETE" method="post">

@@ -46,4 +46,16 @@ function getShowtimesArray(formData){
     return showtimes;
 }
 
-module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray};
+function sortShowtimesByDate(showtimesArray){
+    const sortedShowtimes = {};
+    for(let showtime of showtimesArray){
+        let date = showtime.toJSON().split("T")[0];
+        if(!sortedShowtimes[date]){
+            sortedShowtimes[date] = [];
+        }
+        sortedShowtimes[date].push(showtime);
+    }
+    return sortedShowtimes;
+}
+
+module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate};
