@@ -3,15 +3,17 @@
 <h1>EDIT MOVIE</h1>
 <form action="/movies/<%= foundMovie.id %>?_method=PUT" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<%= foundMovie.id %>">
+    <input type="hidden" name="posterUrl" value="<%= foundMovie.posterUrl %>">
+    <input type="hidden" name="bannerUrl" value="<%= foundMovie.bannerUrl %>">
     <input class="form-control" type="text" name="title" id="movie-title" value="<%= foundMovie.title %>">
-    <!-- <div class="form-group">
+    <div class="form-group">
         <label for="movie-banner">Banner Image</label>
         <input class="form-control" type="file" name="banner" id="movie-banner">
     </div>
     <div class="form-group">
         <label for="movie-poster">Poster Image</label>
         <input class="form-control" type="file" name="poster" id="movie-poster">
-    </div> -->
+    </div>
     <div class="form-group" id="showtimes-div">
         <% foundMovie.showtimes.forEach((showtime, i) => { %>
             <div class="showtime form-control" id="showtime-<%= i %>">

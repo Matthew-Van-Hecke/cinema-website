@@ -4,7 +4,7 @@ const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const methodOverride = require('method-override');
-const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate} = require('./helperFunctions');
+const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate, updateImage} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
 const PageContent = require('./models/pageContent');
@@ -103,11 +103,27 @@ app.get("/movies/:id/edit", (req, res) => {
 app.put("/movies/:id", (req, res) => {
     const showtimes = getShowtimesArray(req.body);
     const newData = {title: req.body.title, showtimes};
+    let {poster, banner} = req.files;
+    if(poster){
+        console.log("POSTER");
+        let posterFindPath = '/media/posters/' + poster.name;
+        console.log(posterFindPath);
+        updateImage(poster, `public${req.body.posterUrl}`, "poster", fs);
+        newData.posterUrl = posterFindPath;
+    }
+    if(banner){
+        console.log("BANNER");
+        let bannerFindPath = '/media/banners/' + banner.name;
+        console.log(bannerFindPath);
+        updateImage(banner, `public${req.body.bannerUrl}`, "banner", fs);
+        newData.bannerUrl = bannerFindPath;
+    }
     Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false}, (err, movie) => {
         if(err){
             console.log(err);
         } else {
-            res.redirect(`/movies/${req.body.id}`);
+            console.log(req.params.id);
+            res.redirect(`/movies/${req.params.id}`);
         }
     });
 });

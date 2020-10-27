@@ -158,4 +158,12 @@ function getDayOfWeek(abbreviation){
     }
 }
 
-module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate};
+function updateImage(object, currentImageUrl, imageRole, fs){
+    fs.unlink(currentImageUrl, () => {
+        console.log("Removed poster image");
+        let savePath = `./public/media/${imageRole}s/${object.name}`;
+        moveFile(object, savePath);
+    });
+}
+
+module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate, updateImage};
