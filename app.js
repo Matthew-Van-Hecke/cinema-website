@@ -132,6 +132,13 @@ app.delete("/movies/:id", (req, res) => {
         }
     });
 });
+app.get("/about", (req, res) => {
+    res.render("about");
+});
+// Edit Page Content
+app.get("/edit-page-content", (req, res) => {
+    res.render("edit-page-content");
+});
 
 app.listen(3000, () => {
     console.log("---Server is running---");
