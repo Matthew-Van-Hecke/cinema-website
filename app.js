@@ -2,11 +2,12 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
-const fs = require("fs");
+const fs = require('fs');
 const methodOverride = require('method-override');
 const {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate} = require('./helperFunctions');
 
 const Movie = require('./models/movie');
+const PageContent = require('./models/pageContent');
 
 const app = express();
 
@@ -133,14 +134,31 @@ app.delete("/movies/:id", (req, res) => {
     });
 });
 app.get("/about", (req, res) => {
-    res.render("about");
+    PageContent.findOne({pageName: "about"}, (err, pageContent) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render
+        }
+    });
 });
 // Edit Page Content
 app.get("/:page/edit", (req, res) => {
     let pageName = req.params.page;
     res.render("edit-page-content", {pageName});
 });
+// Contact
+app.get("/contact", (req, res) => {
+    PageContent.findOne({pageName: "contact"}, (err, pageContent) => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(pageContent.title);
+            res.render("contact", {pageContent});
+        }
+    });
+});
 
 app.listen(3000, () => {
     console.log("---Server is running---");
-})
+});
