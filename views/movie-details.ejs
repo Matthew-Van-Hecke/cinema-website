@@ -5,12 +5,12 @@
             <img src="<%= foundMovie.bannerUrl %>" alt="<%= foundMovie.title %>" id="image-on-details-view">
         </div>
         <div class="col-md-6">
-            <ul>
+            <ul class="showtimes">
                 <% Object.keys(sortedShowtimes).forEach(showtimeDate => { %>
-                    <li><%= showtimeDate %>
-                        <ul>
+                    <li class="showtime-date-times"><%= showtimeDate %>
+                        <ul class="showtime-times-ul">
                             <% sortedShowtimes[showtimeDate].forEach(showtime => { %>
-                                <li><%= showtime %></li>
+                                <li class="showtime-time"><%= showtime %></li>
                             <% }) %>
                         </ul>
                     </li>

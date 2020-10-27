@@ -31,7 +31,7 @@ function generateShowtimesInnerHTML(showtimes){
         const dateElement = generateWrapperElement("li", "showtime-date-times", `${showdate}\n${timesUl}`);
         showtimesStringBuilder.push(dateElement);
     }
-    return showtimesStringBuilder.join("\n");
+    return generateWrapperElement("ul", "showtimes", showtimesStringBuilder.join("\n"));
 }
 
 function generateWrapperElement(type, className, innerHTML){
