@@ -6,9 +6,10 @@ function stringToDate(dateString){
     return new Date(dateString);
 }
 
-function generateShowtimesCard({title, posterUrl: imgUrl, showtimes, id}){
+function generateShowtimesCard({title, posterUrl: imgUrl, id}, showtimes){
+    console.log("Generate Showtime Card", showtimes);
     let columnOne = generateWrapperElement("div", "col-md-6", `<img src="${imgUrl}" alt="${title}">`);
-    let showtimesString = showtimes.map(showtime => `\n<li>${new Date(showtime)}</li>`).join("");
+    let showtimesString = Object.keys(showtimes).map(showdate => `\n<li>${showdate}${generateWrapperElement("ul", "showtime-times", showtimes[showdate].map(s => `<li>${s}</li>`).join("\n"))}</li>`).join("");
     let showtimesUl = generateWrapperElement("ul", "showtimes-list", showtimesString);
     // let deleteForm = `\n<form action="/movies/${id}?_method=DELETE" method="post"><button>Delete Movie</button></form>`;
     let columnTwo = generateWrapperElement("div", "col-md-6", showtimesUl);
@@ -55,9 +56,16 @@ function sortShowtimesByDate(showtimesArray){
         if(!sortedShowtimes[date]){
             sortedShowtimes[date] = [];
         }
-        sortedShowtimes[date].push(showtime);
+        sortedShowtimes[date].push(convertToTimeString(showtime));
     }
     return sortedShowtimes;
+}
+
+function convertToTimeString(dateObject){
+    let hours = dateObject.getHours();
+    let minutes = dateObject.getMinutes();
+    let amOrPm = hours < 12 ? "AM" : "PM";
+    return `${(hours % 12).toString()}:${minutes < 10 ? `0${minutes}` : minutes.toString()}${amOrPm}`;
 }
 
 function expandDateString(dateString){
@@ -129,4 +137,4 @@ function getDayOfWeek(abbreviation){
     }
 }
 
-module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate, expandDateString};
+module.exports = {stringArrayToDateArray, generateShowtimesCard, moveFile, getShowtimesArray, sortShowtimesByDate};

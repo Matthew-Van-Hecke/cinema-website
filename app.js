@@ -60,7 +60,6 @@ app.post('/new', (req, res) => {
 //SHOW
 app.get("/movies/:id", (req, res) => {
     Movie.findById(req.params.id, (err, foundMovie) => {
-        // foundMovie.showtimes = sortShowtimesByDate(foundMovie.showtimes);
         if(err){
             console.log(err);
         } else {
@@ -77,8 +76,13 @@ app.get("/showtimes", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            console.log(allMovies);
-            res.render("showtimes", {allMovies, generateShowtimesCard});
+            console.log(typeof allMovies[0].showtimes[0]);
+            let sortedShowtimes = {};
+            for(let movie of allMovies){
+                let showtimes = stringArrayToDateArray(movie.showtimes);
+                sortedShowtimes[movie.id] = sortShowtimesByDate(showtimes);
+            }
+            res.render("showtimes", {allMovies, generateShowtimesCard, sortedShowtimes});
         }
     });
 });
