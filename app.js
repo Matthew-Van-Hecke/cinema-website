@@ -134,18 +134,36 @@ app.delete("/movies/:id", (req, res) => {
     });
 });
 app.get("/about", (req, res) => {
-    PageContent.findOne({pageName: "about"}, (err, pageContent) => {
+    PageContent.findOne({pageName: "about"}, (err, content) => {
         if(err){
             console.log(err);
         } else {
-            res.render
+            res.render("about", {content});
         }
     });
 });
 // Edit Page Content
 app.get("/:page/edit", (req, res) => {
     let pageName = req.params.page;
-    res.render("edit-page-content", {pageName});
+    PageContent.findOne({pageName}, (err, content) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render("edit-page-content", {content});
+        }
+    });
+});
+// Update Page Content
+app.put("/:page", (req, res) => {
+    const {_id, pageName, title, content} = req.body;
+    const updatedData = {pageName, title, content};
+    PageContent.findByIdAndUpdate(_id, updatedData, {useFindAndModify: false}, (err, content) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/" + pageName);
+        }
+    });
 });
 // Contact
 app.get("/contact", (req, res) => {
@@ -153,7 +171,6 @@ app.get("/contact", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            console.log(pageContent.title);
             res.render("contact", {pageContent});
         }
     });

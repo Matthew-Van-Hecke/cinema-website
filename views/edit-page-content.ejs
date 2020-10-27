@@ -2,11 +2,13 @@
 
 <h1>Edit Page Content</h1>
 
-<form action="<%= pageName %>/edit" method="post">
+<form action="/<%= content.pageName %>?_method=PUT" method="post">
+    <input type="hidden" name="_id" value="<%= content._id %>">
+    <input type="hidden" name="pageName" value="<%= content.pageName %>">
     <label for="page-header">Name</label>
-    <input type="text" name="name" id="page-header">
+    <input type="text" name="title" id="page-header" value="<%= content.title %>">
     <label for="htmlContent"></label>
-    <textarea name="content" id="htmlContent" cols="30" rows="10"></textarea>
+    <textarea name="content" id="htmlContent" cols="30" rows="10"><%= content.content %></textarea>
     <input type="submit">
 </form>
 
