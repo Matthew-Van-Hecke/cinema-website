@@ -9,14 +9,29 @@ function stringToDate(dateString){
 function generateShowtimesCard({title, posterUrl: imgUrl, id}, showtimes){
     console.log("Generate Showtime Card", showtimes);
     let columnOne = generateWrapperElement("div", "col-md-6", `<img src="${imgUrl}" alt="${title}">`);
-    let showtimesString = Object.keys(showtimes).map(showdate => `\n<li>${showdate}${generateWrapperElement("ul", "showtime-times", showtimes[showdate].map(s => `<li>${s}</li>`).join("\n"))}</li>`).join("");
+    let showtimesString = generateShowtimesInnerHTML(showtimes);
     let showtimesUl = generateWrapperElement("ul", "showtimes-list", showtimesString);
-    // let deleteForm = `\n<form action="/movies/${id}?_method=DELETE" method="post"><button>Delete Movie</button></form>`;
     let columnTwo = generateWrapperElement("div", "col-md-6", showtimesUl);
     let titleElement = generateWrapperElement("h4", "movie-showtime-title", title);
     let row = generateWrapperElement("div", "row", `${columnOne}\n${columnTwo}`);
     let showtimeCard = generateWrapperElement("div", "showtimes-card", `${titleElement}\n${row}`);
     return showtimeCard;
+}
+
+function generateShowtimesInnerHTML(showtimes){
+    const showdates = Object.keys(showtimes);
+    let showtimesStringBuilder = [];
+    for(let showdate of showdates){
+        const timesArray = [];
+        for(let time of showtimes[showdate]){
+            let timeElement = generateWrapperElement("li", "showtime-time", time);
+            timesArray.push(timeElement);
+        }
+        const timesUl = generateWrapperElement("ul", "showtime-times-ul", timesArray.join("\n"));
+        const dateElement = generateWrapperElement("li", "showtime-date-times", `${showdate}\n${timesUl}`);
+        showtimesStringBuilder.push(dateElement);
+    }
+    return showtimesStringBuilder.join("\n");
 }
 
 function generateWrapperElement(type, className, innerHTML){
