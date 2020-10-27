@@ -63,9 +63,10 @@ function getShowtimesArray(formData){
 }
 
 function sortShowtimesByDate(showtimesArray){
-    showtimesArray.sort((a, b) => a.valueOf() - b.valueOf());
+    const filteredShowtimes = filterOutPastShowtimes(showtimesArray);
+    filteredShowtimes.sort((a, b) => a.valueOf() - b.valueOf());
     const sortedShowtimes = {};
-    for(let showtime of showtimesArray){
+    for(let showtime of filteredShowtimes){
         let date = showtime.toDateString();
         date = expandDateString(date);
         if(!sortedShowtimes[date]){
@@ -86,6 +87,11 @@ function convertToTimeString(dateObject){
 function expandDateString(dateString){
     let [dayOfWeek, month, dayOfMonth, year] = dateString.split(" ");
     return `${getDayOfWeek(dayOfWeek)}, ${getMonth(month)} ${parseInt(dayOfMonth)}, ${year}`;
+}
+
+function filterOutPastShowtimes(showtimesArray){
+    let now = new Date();
+    return showtimesArray.filter(s => s >= now);
 }
 
 function getMonth(abbreviation){
