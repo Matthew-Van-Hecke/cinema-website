@@ -136,8 +136,9 @@ app.get("/about", (req, res) => {
     res.render("about");
 });
 // Edit Page Content
-app.get("/edit-page-content", (req, res) => {
-    res.render("edit-page-content");
+app.get("/:page/edit", (req, res) => {
+    let pageName = req.params.page;
+    res.render("edit-page-content", {pageName});
 });
 
 app.listen(3000, () => {
