@@ -8,22 +8,6 @@ function moveFile(object, savePath){
     });
 }
 
-function getShowtimesArray(formData){
-    const showtimes = [];
-    for(let i = 0; true; i++){
-        let showtime = formData["showtime-" + i];
-        if(showtime){
-            console.log(showtime);
-            showtimes.push(showtime);
-        } else {
-            break;
-        }
-    }
-    return showtimes;
-}
-
-
-
 function updateImage(object, currentImageUrl, imageRole, fs){
     console.log(currentImageUrl);
     fs.unlink(currentImageUrl, () => {
@@ -33,4 +17,4 @@ function updateImage(object, currentImageUrl, imageRole, fs){
     });
 }
 
-module.exports = {moveFile, getShowtimesArray, updateImage};
+module.exports = {moveFile, updateImage};

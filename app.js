@@ -4,9 +4,10 @@ const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const methodOverride = require('method-override');
-const {getShowtimesArray, moveFile, updateImage} = require('./helperFunctions/helperFunctions');
+const formProcessingFunctions = require('./helperFunctions/formProcessingFunctions');
 const dateFunctions = require('./helperFunctions/dateFunctions');
 const htmlRenderingFunctions = require('./helperFunctions/htmlRenderingFunctions');
+const fileManagementFunctions = require('./helperFunctions/fileManagementFunctions');
 
 const Movie = require('./models/movie');
 const PageContent = require('./models/pageContent');
@@ -46,10 +47,10 @@ app.post('/new', (req, res) => {
         let bannerSavePath = './public' + bannerFindPath;
         let posterFindPath = '/media/posters/' + poster.name;
         let posterSavePath = './public' + posterFindPath;
-        let showtimes = getShowtimesArray(req.body);
+        let showtimes = formProcessingFunctions.getShowtimesArray(req.body);
         console.log(showtimes);
-        moveFile(banner, bannerSavePath);
-        moveFile(poster, posterSavePath);
+        fileManagementFunctions.moveFile(banner, bannerSavePath);
+        fileManagementFunctions.moveFile(poster, posterSavePath);
         Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes}, (err, newMovie) => {
             if(err){
                 console.log(err);
@@ -104,21 +105,22 @@ app.get("/movies/:id/edit", (req, res) => {
 });
 // UPDATE
 app.put("/movies/:id", (req, res) => {
-    const showtimes = getShowtimesArray(req.body);
+    const showtimes = formProcessingFunctions.getShowtimesArray(req.body);
     const newData = {title: req.body.title, showtimes};
-    let {poster, banner} = req.files;
-    if(poster){
+    if(req.files && req.files.poster){
+        const poster = req.files.poster;
         console.log("POSTER");
         let posterFindPath = '/media/posters/' + poster.name;
         console.log(posterFindPath);
-        updateImage(poster, `public${req.body.posterUrl}`, "poster", fs);
+        fileManagementFunctions.updateImage(poster, `public${req.body.posterUrl}`, "poster", fs);
         newData.posterUrl = posterFindPath;
     }
-    if(banner){
+    if(req.files && req.files.banner){
+        const banner = req.files.banner;
         console.log("BANNER");
         let bannerFindPath = '/media/banners/' + banner.name;
         console.log(bannerFindPath);
-        updateImage(banner, `public${req.body.bannerUrl}`, "banner", fs);
+        fileManagementFunctions.updateImage(banner, `public${req.body.bannerUrl}`, "banner", fs);
         newData.bannerUrl = bannerFindPath;
     }
     Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false}, (err, movie) => {
