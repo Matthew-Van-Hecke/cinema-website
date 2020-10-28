@@ -159,6 +159,7 @@ function getDayOfWeek(abbreviation){
 }
 
 function updateImage(object, currentImageUrl, imageRole, fs){
+    console.log(currentImageUrl);
     fs.unlink(currentImageUrl, () => {
         console.log("Removed poster image");
         let savePath = `./public/media/${imageRole}s/${object.name}`;
