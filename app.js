@@ -197,6 +197,12 @@ app.get("/contact", (req, res) => {
     });
 });
 
+// Not Found
+app.get("*", (req, res) => {
+    res.render("not-found", {url: req.originalUrl});
+    // res.send(req.originalUrl);
+});
+
 app.listen(3000, () => {
     console.log("---Server is running---");
 });
