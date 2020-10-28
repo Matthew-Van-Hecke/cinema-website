@@ -1,3 +1,11 @@
+function stringArrayToDateArray(stringArray){
+    return stringArray.map(s => stringToDate(s));
+}
+
+function stringToDate(dateString){
+    return new Date(dateString);
+}
+
 function sortShowtimesByDate(showtimesArray){
     const filteredShowtimes = filterOutPastShowtimes(showtimesArray);
     filteredShowtimes.sort((a, b) => a.valueOf() - b.valueOf());
@@ -95,4 +103,4 @@ function getDayOfWeek(abbreviation){
     }
 }
 
-module.exports = sortShowtimesByDate;
+module.exports = {stringArrayToDateArray, sortShowtimesByDate};

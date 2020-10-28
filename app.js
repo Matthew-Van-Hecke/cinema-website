@@ -4,8 +4,9 @@ const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const methodOverride = require('method-override');
-const {stringArrayToDateArray, generateShowtimesCard, getShowtimesArray, moveFile, updateImage} = require('./helperFunctions/helperFunctions');
-const sortShowtimes = require('./helperFunctions/dateFunctions');
+const {getShowtimesArray, moveFile, updateImage} = require('./helperFunctions/helperFunctions');
+const dateFunctions = require('./helperFunctions/dateFunctions');
+const htmlRenderingFunctions = require('./helperFunctions/htmlRenderingFunctions');
 
 const Movie = require('./models/movie');
 const PageContent = require('./models/pageContent');
@@ -65,8 +66,8 @@ app.get("/movies/:id", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            let showtimes = stringArrayToDateArray(foundMovie.showtimes);
-            let sortedShowtimes = sortShowtimes(showtimes);
+            let showtimes = dateFunctions.stringArrayToDateArray(foundMovie.showtimes);
+            let sortedShowtimes = dateFunctions.sortShowtimesByDate(showtimes);
             foundMovie.showtimes = sortedShowtimes;
             console.log(foundMovie.showtimes);
             res.render("movie-details", {foundMovie, sortedShowtimes});
@@ -74,6 +75,7 @@ app.get("/movies/:id", (req, res) => {
     });
 });
 app.get("/showtimes", (req, res) => {
+    const {generateShowtimesCard} = htmlRenderingFunctions;
     Movie.find({}, (err, allMovies) => {
         if(err){
             console.log(err);
@@ -81,8 +83,8 @@ app.get("/showtimes", (req, res) => {
             console.log(typeof allMovies[0].showtimes[0]);
             let sortedShowtimes = {};
             for(let movie of allMovies){
-                let showtimes = stringArrayToDateArray(movie.showtimes);
-                sortedShowtimes[movie.id] = sortShowtimes(showtimes);
+                let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
+                sortedShowtimes[movie.id] = dateFunctions.sortShowtimesByDate(showtimes);
             }
             res.render("showtimes", {allMovies, generateShowtimesCard, sortedShowtimes});
         }
@@ -95,7 +97,7 @@ app.get("/movies/:id/edit", (req, res) => {
             console.log(err);
         } else {
             console.log(foundMovie);
-            // foundMovie.showtimes = stringArrayToDateArray(foundMovie.showtimes);
+            // foundMovie.showtimes = dateFunctions.stringArrayToDateArray(foundMovie.showtimes);
             res.render("edit", {foundMovie});
         }
     });
