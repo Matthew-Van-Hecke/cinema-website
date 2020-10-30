@@ -4,6 +4,7 @@ const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const methodOverride = require('method-override');
+const path = require('path');
 const formProcessingFunctions = require('./helperFunctions/formProcessingFunctions');
 const dateFunctions = require('./helperFunctions/dateFunctions');
 const htmlRenderingFunctions = require('./helperFunctions/htmlRenderingFunctions');
@@ -14,7 +15,9 @@ const PageContent = require('./models/pageContent');
 
 const app = express();
 
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
 app.use(urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(upload());
@@ -198,10 +201,11 @@ app.get("/contact", (req, res) => {
 });
 
 // Not Found
-app.get("*", (req, res) => {
-    res.render("not-found", {url: req.originalUrl});
-    // res.send(req.originalUrl);
-});
+// app.get("*", (req, res) => {
+//     console.log("Page not found.");
+//     res.render("not-found", {url: req.originalUrl});
+//     // res.send(req.originalUrl);
+// });
 
 app.listen(3000, () => {
     console.log("---Server is running---");
