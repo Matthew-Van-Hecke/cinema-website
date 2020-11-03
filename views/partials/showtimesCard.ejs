@@ -1,10 +1,24 @@
 <div class="showtimes-card">
-    <h3 class="movie-title"><%= movie.title %></h3>
     <div class="row">
-        <div class="col-md-6">
-            <img src="<%= movie.posterUrl %>" alt="<%= movie.title %>">
+        <div class="col-md-6 showtimes-card-col-1">
+            <h3 class="movie-title"><%= movie.title %></h3>
+            <% if(detailed){ %>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> poster">
+                    </div>
+                    <div class="col-md-6">
+                        <p>Run Time: 140min</p>
+                        <p>Directed By: Frank Capra</p>
+                        <p>Starring: Clark Gable, Claudette Colbert, Alan Hale</p>
+                        <p>A young heiress runs away from her overbearing father, and meets a journalist who takes interest in her for the story, and they embark on an epic journey up the east coast.</p>
+                    </div>
+                </div>
+            <% } else { %>
+                <img src="<%= movie.bannerUrl %>" alt="<%= movie.title %> banner">
+            <% } %>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 showtimes-card-col-2">
             <ul class="showtimes-list">
                 <% for(let showdate of Object.keys(showtimesByDate)){ %>
                     <li><%= showdate %>

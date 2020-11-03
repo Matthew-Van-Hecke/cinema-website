@@ -47,8 +47,7 @@
 }
 
 .showtimes-card img {
-    width:15em;
-    margin-left: 4em;
+    width:80%;
 }
 
 .showtimes {
@@ -60,4 +59,9 @@
 .showtime-times-ul {
     list-style: none;
     font-weight: 400;
+}
+
+.showtimes-card-col-1 {
+    text-align: center;
+    border-right: 2px solid grey;
 }
