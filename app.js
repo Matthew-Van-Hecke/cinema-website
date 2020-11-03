@@ -7,7 +7,6 @@ const methodOverride = require('method-override');
 const path = require('path');
 const formProcessingFunctions = require('./helperFunctions/formProcessingFunctions');
 const dateFunctions = require('./helperFunctions/dateFunctions');
-const htmlRenderingFunctions = require('./helperFunctions/htmlRenderingFunctions');
 const fileManagementFunctions = require('./helperFunctions/fileManagementFunctions');
 
 const Movie = require('./models/movie');
@@ -79,7 +78,6 @@ app.get("/movies/:id", (req, res) => {
     });
 });
 app.get("/showtimes", (req, res) => {
-    const {generateShowtimesCard} = htmlRenderingFunctions;
     Movie.find({}, (err, allMovies) => {
         if(err){
             console.log(err);
@@ -90,7 +88,7 @@ app.get("/showtimes", (req, res) => {
                 let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
                 sortedShowtimes[movie.id] = dateFunctions.sortShowtimesByDate(showtimes);
             }
-            res.render("showtimes", {allMovies, generateShowtimesCard, sortedShowtimes});
+            res.render("showtimes", {allMovies, sortedShowtimes});
         }
     });
 });

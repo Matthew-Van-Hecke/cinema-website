@@ -2,6 +2,6 @@
 
 <h1>Showtimes</h1>
 <% allMovies.forEach(movie => { %>
-    <%- generateShowtimesCard(movie, sortedShowtimes[movie.id]) %> 
+    <%- include("partials/showtimesCard.ejs", {movie, showtimesByDate: sortedShowtimes[movie.id]}) %>
 <% }) %>
 <%- include("partials/footer.ejs") %>
