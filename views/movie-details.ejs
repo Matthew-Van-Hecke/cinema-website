@@ -1,28 +1,5 @@
 <%- include("partials/header.ejs") %>
-<h2><%= foundMovie.title %></h2>
-    <div class="movie-details row">
-        <div class="col-md-6">
-            <img src="<%= foundMovie.bannerUrl %>" alt="<%= foundMovie.title %>" id="image-on-details-view">
-        </div>
-        <div class="col-md-6">
-            <ul class="showtimes">
-                <% Object.keys(sortedShowtimes).forEach(showtimeDate => { %>
-                    <li class="showtime-date-times"><%= showtimeDate %>
-                        <ul class="showtime-times-ul">
-                            <% sortedShowtimes[showtimeDate].forEach(showtime => { %>
-                                <li class="showtime-time"><%= showtime %></li>
-                            <% }) %>
-                        </ul>
-                    </li>
-                <% }) %>
-            </ul>
-            <form action="/movies/<%= foundMovie.id %>?_method=DELETE" method="post">
-                <button>Delete Movie</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <a href="/movies/<%= foundMovie.id %>/edit">Edit Movie</a>
-        </div>
-    </div>
+
+<%- include("partials/showtimesCard.ejs", {movie: foundMovie, showtimesByDate: sortedShowtimes, detailed: true}) %> 
 
 <%- include("partials/footer.ejs") %>
