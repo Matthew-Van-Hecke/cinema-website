@@ -1,5 +1,10 @@
 <%- include("partials/header.ejs") %>
 
+<div class="movie-lookup">
+    <input type="text" id="search-title">
+    <button onclick="searchForMovie()">Search</button>
+</div>
+<div id="movie-result"></div>
 <form action="/new" method="post" enctype="multipart/form-data">
     <input class="form-control" type="text" name="title" id="movie-title">
     <div class="form-group">

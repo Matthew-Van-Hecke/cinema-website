@@ -36,3 +36,14 @@ function removeShowtime(id){
         elToUpdate.children[1].setAttribute("name", label);
     }
 }
+let movieLookup = document.getElementById("movie-lookup-form");
+// .addEventListener("submit", function(e){
+//     e.preventDefault();
+//     console.log("Submitting");
+// });
+
+function searchForMovie(){
+    let searchBox = document.getElementById("search-title");
+    let searchTerm = searchBox.value;
+    console.log("Searching for: " + searchTerm);
+}
