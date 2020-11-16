@@ -197,6 +197,10 @@ app.get("/contact", (req, res) => {
         }
     });
 });
+//NEW Blogpost
+app.get("/blog/new", (req, res) => {
+    res.render("blog/new-post");
+});
 
 // Not Found
 // app.get("*", (req, res) => {
