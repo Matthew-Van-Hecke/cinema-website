@@ -11,6 +11,7 @@ const fileManagementFunctions = require('./helperFunctions/fileManagementFunctio
 
 const Movie = require('./models/movie');
 const PageContent = require('./models/pageContent');
+const BlogPost = require('./models/blogPost');
 
 const app = express();
 
@@ -197,9 +198,31 @@ app.get("/contact", (req, res) => {
         }
     });
 });
+//LIST Blog
+app.get("/blog", (req, res) => {
+    BlogPost.find({}, (err, posts) => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(posts);
+            res.render("blog/list", {posts});
+        }
+    });
+});
 //NEW Blogpost
 app.get("/blog/new", (req, res) => {
     res.render("blog/new-post");
+});
+//Create Blogpost
+app.post("/blog", (req, res) => {
+    const {title, author, content} = req.body;
+    BlogPost.create({title, author, content}, (err, blogPost) => {
+        if(err){
+            res.send(err);
+        }
+        console.log(blogPost);
+        res.redirect("/blog");
+    });
 });
 
 // Not Found
