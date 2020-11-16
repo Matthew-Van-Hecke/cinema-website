@@ -30,6 +30,12 @@
                     </li>
                 <% } %>
             </ul>
+            <form action="/movies/<%= movie.id %>?_method=DELETE" method="post">
+                <button>Delete Movie</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <a href="/movies/<%= movie.id %>/edit">Edit Movie</a>
         </div>
     </div>
 </div>

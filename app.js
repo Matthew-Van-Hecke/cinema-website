@@ -23,17 +23,14 @@ app.use(express.static(__dirname + "/public"));
 app.use(upload());
 app.use(methodOverride('_method'));
 
-mongoose.connect("mongodb://localhost/cinema-website", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost/cinema-website", {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => {console.log("----Mongo Connection Open----")})
+    .catch(err => {console.log("----Mongo Connection Error----\n", err)});
 
 app.get('/', (req, res) => {
-    Movie.find({}, (err, allMovies) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log(allMovies);
-            res.render("home", {allMovies});
-        }
-    });
+    Movie.find()
+        .then(allMovies => { res.render("home", {allMovies}) })
+        .catch(err => { console.log(err) });
 });
 
 //NEW
@@ -54,13 +51,9 @@ app.post('/new', (req, res) => {
         console.log(showtimes);
         fileManagementFunctions.moveFile(banner, bannerSavePath);
         fileManagementFunctions.moveFile(poster, posterSavePath);
-        Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes}, (err, newMovie) => {
-            if(err){
-                console.log(err);
-            } else {
-                console.log(newMovie);
-            }
-        });
+        Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes})
+        .then(newMovie => console.log(newMovie))
+        .catch(err => console.log(err));
     }
     res.redirect('/');
 });
@@ -79,31 +72,28 @@ app.get("/movies/:id", (req, res) => {
     });
 });
 app.get("/showtimes", (req, res) => {
-    Movie.find({}, (err, allMovies) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log(typeof allMovies[0].showtimes[0]);
+    Movie.find()
+        .then(allMovies => {
             let sortedShowtimes = {};
             for(let movie of allMovies){
                 let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
                 sortedShowtimes[movie.id] = dateFunctions.sortShowtimesByDate(showtimes);
             }
             res.render("showtimes", {allMovies, sortedShowtimes});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // EDIT
 app.get("/movies/:id/edit", (req, res) => {
-    Movie.findById(req.params.id, (err, foundMovie) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log(foundMovie);
-            // foundMovie.showtimes = dateFunctions.stringArrayToDateArray(foundMovie.showtimes);
+    Movie.findById(req.params.id)
+        .then(foundMovie => {
             res.render("edit", {foundMovie});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // UPDATE
 app.put("/movies/:id", (req, res) => {
@@ -125,89 +115,87 @@ app.put("/movies/:id", (req, res) => {
         fileManagementFunctions.updateImage(banner, `public${req.body.bannerUrl}`, "banner", fs);
         newData.bannerUrl = bannerFindPath;
     }
-    Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false}, (err, movie) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log(req.params.id);
+    Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false})
+        .then(() => {
             res.redirect(`/movies/${req.params.id}`);
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // DESTROY
 app.delete("/movies/:id", (req, res) => {
-    Movie.findById(req.params.id, (err, movie) => {
-        if(err){
-            console.log(err);
-        } else {
+    Movie.findById(req.params.id)
+        .then(movie => {
             fs.unlink(`public/${movie.bannerUrl}`, () => {
                 console.log("Removed banner image");
             });
             fs.unlink(`public/${movie.posterUrl}`, () => {
                 console.log("Removed poster image");
-                Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false}, (err) => {
-                    if(err) {
-                        console.log(err);
-                    } else {
+                Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false})
+                    .then(() => {
                         res.redirect("/showtimes");
-                    }
-                });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             });
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 app.get("/about", (req, res) => {
-    PageContent.findOne({pageName: "about"}, (err, content) => {
-        if(err){
-            console.log(err);
-        } else {
+    PageContent.findOne({pageName: "about"})
+        .then(content => {
             res.render("about", {content});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // Edit Page Content
 app.get("/:page/edit", (req, res) => {
     let pageName = req.params.page;
-    PageContent.findOne({pageName}, (err, content) => {
-        if(err){
-            console.log(err);
-        } else {
+    PageContent.findOne({pageName})
+        .then(content => {
             res.render("edit-page-content", {content});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // Update Page Content
 app.put("/:page", (req, res) => {
     const {_id, pageName, title, content} = req.body;
     const updatedData = {pageName, title, content};
-    PageContent.findByIdAndUpdate(_id, updatedData, {useFindAndModify: false}, (err, content) => {
-        if(err){
-            console.log(err);
-        } else {
+    PageContent.findByIdAndUpdate(_id, updatedData, {useFindAndModify: false})
+        .then(content => {
             res.redirect("/" + pageName);
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 // Contact
 app.get("/contact", (req, res) => {
-    PageContent.findOne({pageName: "contact"}, (err, pageContent) => {
-        if(err){
-            console.log(err);
-        } else {
+    PageContent.findOne({pageName: "contact"})
+        .then(pageContent => {
             res.render("contact", {pageContent});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 //LIST Blog
 app.get("/blog", (req, res) => {
-    BlogPost.find({}, (err, posts) => {
-        if(err){
-            console.log(err);
-        } else {
-            console.log(posts);
+    BlogPost.find()
+        .then(posts => {
             res.render("blog/list", {posts});
-        }
-    });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 //NEW Blogpost
 app.get("/blog/new", (req, res) => {
@@ -216,13 +204,14 @@ app.get("/blog/new", (req, res) => {
 //Create Blogpost
 app.post("/blog", (req, res) => {
     const {title, author, content} = req.body;
-    BlogPost.create({title, author, content}, (err, blogPost) => {
-        if(err){
-            res.send(err);
-        }
-        console.log(blogPost);
-        res.redirect("/blog");
-    });
+    BlogPost.create({title, author, content})
+        .then(blogPost => {
+            console.log(blogPost);
+            res.redirect("/blog");
+        })
+        .catch(err => {
+            console.log(err);
+        })
 });
 
 // Not Found
