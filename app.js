@@ -97,7 +97,7 @@ app.put("/movies/:id", async (req, res) => {
         fileManagementFunctions.updateImage(banner, `public${req.body.bannerUrl}`, "banner", fs);
         newData.bannerUrl = bannerFindPath;
     }
-    await Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false});
+    await Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false, runValidators: true});
     res.redirect(`/movies/${req.params.id}`);
 });
 // DESTROY
@@ -126,7 +126,7 @@ app.get("/:page/edit", async (req, res) => {
 app.put("/:page", async (req, res) => {
     const {_id, pageName, title, content} = req.body;
     const updatedData = {pageName, title, content};
-    await PageContent.findByIdAndUpdate(_id, updatedData, {useFindAndModify: false});
+    await PageContent.findByIdAndUpdate(_id, updatedData, {useFindAndModify: false, runValidators: true});
     res.redirect("/" + pageName);
 });
 // Contact
