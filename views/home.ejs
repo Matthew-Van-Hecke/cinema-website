@@ -1,17 +1,52 @@
 <% layout('layouts/boilerplate') %>
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+<div id="movieCarouselIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <% allMovies.forEach((movie, i) => { %>
+            <% if(i === 0){ %>
+                <li data-target="#movieCarouselIndicators" data-slide-to="0" class="active"></li>
+            <% } else { %>
+                <li data-target="#movieCarouselIndicators" data-slide-to="<%= i %>"></li>
+            <% } %>
+        <% }) %>
+    </ol>
     <div class="carousel-inner">
         <% allMovies.forEach((movie, i) => { %>
             <% if(i === 0){ %>
-            <div class="carousel-item active">
+                <div class="carousel-item active">
+                
             <% } else { %>
-            <div class="carousel-item">
+                <div class="carousel-item">
             <% } %>
-                <a href="/movies/<%= movie.id %> ">
-                    <img src="<%= movie.bannerUrl %>" class="d-block w-100" alt="...">
+                    <a href="/movies/<%= movie._id %>">
+                        <img src="<%= movie.bannerUrl %>" class="d-block w-100" alt="<%= movie.title %>">
+                    </a>
+                </div>
+        <% }) %>
+    </div>
+    <a class="carousel-control-prev" href="#movieCarouselIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#movieCarouselIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+
+<!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <%# allMovies.forEach((movie, i) => { %>
+            <%# if(i === 0){ %>
+            <div class="carousel-item active">
+            <%# } else { %>
+            <div class="carousel-item">
+            <%# } %>
+                <a href="/movies/<%#= movie.id %> ">
+                    <img src="<%#= movie.bannerUrl %>" class="d-block w-100" alt="...">
                 </a>
             </div>
-        <% }); %>
+        <%# }); %>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -21,4 +56,4 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
-</div>
+</div> -->
