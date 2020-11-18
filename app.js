@@ -34,7 +34,7 @@ app.get('/', async (req, res) => {
 
 //NEW
 app.get('/new', (req, res) => {
-    res.render("new");
+    res.render("movies/new");
 });
 //CREATE
 app.post('/new', async (req, res) => {
@@ -61,7 +61,7 @@ app.get("/movies/:id", async (req, res) => {
     let showtimes = dateFunctions.stringArrayToDateArray(foundMovie.showtimes);
     let sortedShowtimes = dateFunctions.sortShowtimesByDate(showtimes);
     foundMovie.showtimes = sortedShowtimes;
-    res.render("movie-details", {foundMovie, sortedShowtimes});
+    res.render("movies/show", {foundMovie, sortedShowtimes});
 });
 app.get("/showtimes", async (req, res) => {
     const allMovies = await Movie.find();
@@ -70,12 +70,12 @@ app.get("/showtimes", async (req, res) => {
         let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
         sortedShowtimes[movie.id] = dateFunctions.sortShowtimesByDate(showtimes);
     }
-    res.render("showtimes", {allMovies, sortedShowtimes});
+    res.render("movies/list", {allMovies, sortedShowtimes});
 });
 // EDIT
 app.get("/movies/:id/edit", async (req, res) => {
     const foundMovie = await Movie.findById(req.params.id);
-    res.render("edit", {foundMovie});
+    res.render("movies/edit", {foundMovie});
 });
 // UPDATE
 app.put("/movies/:id", async (req, res) => {
