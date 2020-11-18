@@ -1,5 +1,3 @@
-<%- include("../partials/header.ejs") %>
+<% layout('layouts/boilerplate') %>
 
 <%- include("../partials/showtimesCard.ejs", {movie: foundMovie, showtimesByDate: sortedShowtimes, detailed: true}) %> 
-
-<%- include("../partials/footer.ejs") %>

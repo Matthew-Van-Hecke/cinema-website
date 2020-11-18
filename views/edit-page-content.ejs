@@ -1,4 +1,4 @@
-<%- include("partials/header.ejs") %>
+<% layout('layouts/boilerplate') %>
 
 <h1>Edit Page Content</h1>
 
@@ -11,5 +11,3 @@
     <textarea name="content" id="htmlContent" cols="30" rows="10"><%- content.content %></textarea>
     <input type="submit">
 </form>
-
-<%- include("partials/footer.ejs") %>

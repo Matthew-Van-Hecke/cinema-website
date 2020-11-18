@@ -1,4 +1,4 @@
-<%- include("../partials/header.ejs") %>
+<% layout('layouts/boilerplate') %>
 
 <h1>EDIT MOVIE</h1>
 <form action="/movies/<%= foundMovie.id %>?_method=PUT" method="post" enctype="multipart/form-data">
@@ -25,5 +25,3 @@
     <input class="form-control" type="submit">
 </form>
 <button onclick="addShowtime()">Add Showtime</button>
-
-<%- include("../partials/footer.ejs") %>

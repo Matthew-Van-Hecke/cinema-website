@@ -2,6 +2,7 @@ const express = require('express');
 const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
 const fs = require('fs');
 const methodOverride = require('method-override');
 const path = require('path');
@@ -15,6 +16,7 @@ const BlogPost = require('./models/blogPost');
 
 const app = express();
 
+app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -101,16 +103,16 @@ app.put("/movies/:id", async (req, res) => {
     res.redirect(`/movies/${req.params.id}`);
 });
 // DESTROY
-app.delete("/movies/:id", async (req, res) => {
+app.delete("/movies/:id", (req, res) => {
     const movie = Movie.findById(req.params.id);
     fs.unlink(`public/${movie.bannerUrl}`, () => {
         console.log("Removed banner image");
     });
     fs.unlink(`public/${movie.posterUrl}`, async () => {
         console.log("Removed poster image");
-        await Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false})
-        res.redirect("/movies");
+        await Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false}).catch(() => {console.log("ERROR DELETING MOVIE")});
     });
+    res.redirect("/movies");
 });
 app.get("/about", async (req, res) => {
     const content = await PageContent.findOne({pageName: "about"});
@@ -152,11 +154,11 @@ app.post("/blog", async (req, res) => {
 });
 
 // Not Found
-// app.get("*", (req, res) => {
-//     console.log("Page not found.");
-//     res.render("not-found", {url: req.originalUrl});
-//     // res.send(req.originalUrl);
-// });
+app.get("*", (req, res) => {
+    console.log("Page not found.");
+    res.render("not-found", {url: req.originalUrl});
+    // res.send(req.originalUrl);
+});
 
 app.listen(3000, () => {
     console.log("---Server is running---");

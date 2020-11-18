@@ -1,4 +1,4 @@
-<%- include("../partials/header.ejs") %>
+<% layout('layouts/boilerplate') %>
 
 <div class="movie-lookup">
     <input type="text" id="search-title">
@@ -21,5 +21,3 @@
     <input class="form-control" type="submit">
 </form>
 <button onclick="addShowtime()">Add Showtime</button>
-
-<%- include("../partials/footer.ejs") %>

@@ -1,4 +1,4 @@
-<%- include("../partials/header.ejs") %>
+<% layout('layouts/boilerplate') %>
 
 <form action="/blog" method="POST">
     <label for="title">Title</label>
@@ -9,5 +9,3 @@
     <textarea name="content" id="content" cols="30" rows="10"></textarea>
     <input type="submit" value="Post">
 </form>
-
-<%- include("../partials/footer.ejs") %>
