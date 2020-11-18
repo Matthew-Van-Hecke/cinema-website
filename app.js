@@ -33,11 +33,11 @@ app.get('/', async (req, res) => {
 });
 
 //NEW
-app.get('/new', (req, res) => {
+app.get('/movies/new', (req, res) => {
     res.render("movies/new");
 });
 //CREATE
-app.post('/new', async (req, res) => {
+app.post('/movies/new', async (req, res) => {
     if(req.files){
         let title = req.body.title;
         let banner = req.files.banner;
@@ -63,7 +63,7 @@ app.get("/movies/:id", async (req, res) => {
     foundMovie.showtimes = sortedShowtimes;
     res.render("movies/show", {foundMovie, sortedShowtimes});
 });
-app.get("/showtimes", async (req, res) => {
+app.get("/movies", async (req, res) => {
     const allMovies = await Movie.find();
     let sortedShowtimes = {};
     for(let movie of allMovies){
@@ -109,7 +109,7 @@ app.delete("/movies/:id", async (req, res) => {
     fs.unlink(`public/${movie.posterUrl}`, async () => {
         console.log("Removed poster image");
         await Movie.findByIdAndDelete(req.params.id, {useFindAndModify: false})
-        res.redirect("/showtimes");
+        res.redirect("/movies");
     });
 });
 app.get("/about", async (req, res) => {
