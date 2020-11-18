@@ -23,8 +23,9 @@
     height: 180px;
     /* transform: translateY(-50px); */
     border-radius: 100%;
-    border: 1px solid #444444;
+    /* border: 1px solid #444444; */
     transition: all 0.7s;
+    filter: invert(0.8)
 }
 
 #cinema-logo:hover {
