@@ -1,23 +1,26 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="movie-lookup">
+<!-- <div class="movie-lookup">
     <input type="text" id="search-title">
     <button onclick="searchForMovie()">Search</button>
-</div>
+</div> -->
 <div id="movie-result"></div>
 <form action="/movies/new" method="post" enctype="multipart/form-data">
-    <input class="form-control" type="text" name="title" id="movie-title">
-    <div class="form-group">
-        <label for="movie-banner">Banner Image</label>
+    <div class="form-group pb-3">
+        <label for="movie-title" class="form-label">Title</label>
+        <input class="form-control" type="text" name="title" id="movie-title">  
+    </div>
+    <div class="form-group pb-3">
+        <label for="movie-banner" class="form-label">Banner Image</label>
         <input class="form-control" type="file" name="banner" id="movie-banner">
     </div>
-    <div class="form-group">
-        <label for="movie-poster">Poster Image</label>
+    <div class="form-group pb-3">
+        <label for="movie-poster" class="form-label">Poster Image</label>
         <input class="form-control" type="file" name="poster" id="movie-poster">
     </div>
-    <div class="form-group" id="showtimes-div">
+    <button class="btn btn-primary mb-3" type="button" onclick="addShowtime()">Add Showtime</button>
+    <div class="form-group pb-3" id="showtimes-div">
         
     </div>
-    <input class="form-control" type="submit">
+    <input class="form-control btn-success" type="submit">
 </form>
-<button onclick="addShowtime()">Add Showtime</button>

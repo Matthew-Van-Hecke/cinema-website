@@ -12,17 +12,23 @@ function createShowtimeInput(index){
     let inputElement = document.createElement("input");
     inputElement.setAttribute("type", "datetime-local");
     inputElement.setAttribute("name", "showtime-" + index);
+    inputElement.classList.add("form-control");
     let removeButton = document.createElement("button");
     removeButton.setAttribute("type", "button");
     removeButton.setAttribute("onclick", `removeShowtime(${index})`);
+    removeButton.classList.add("input-group-text");
     removeButton.innerText = "X";
     let div = document.createElement("div");
-    div.classList.add("showtime", "form-control");
+    div.classList.add("showtime", "input-group", "mb-3");
     div.setAttribute("id", "showtime-" + index);
     div.appendChild(removeButton);
     div.appendChild(inputElement);
     return div;
 }
+{/* <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">@</span>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div> */}
 
 function removeShowtime(id){
     let elementToRemove = document.getElementById("showtime-" + id);
