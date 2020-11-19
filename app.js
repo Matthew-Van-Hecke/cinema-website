@@ -143,7 +143,7 @@ app.get("/blog", async (req, res) => {
 });
 //NEW Blogpost
 app.get("/blog/new", (req, res) => {
-    res.render("blog/new-post");
+    res.render("blog/new");
 });
 //Create Blogpost
 app.post("/blog", async (req, res) => {
