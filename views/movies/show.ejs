@@ -1,3 +1,43 @@
 <% layout('layouts/boilerplate') %>
 
-<%- include("../partials/showtimesCard.ejs", {movie: foundMovie, showtimesByDate: sortedShowtimes, detailed: true, withStylesheet: true}) %> 
+<link rel="stylesheet" href="/stylesheets/showtimesCard.css">
+
+<div class="movie-details">
+    <!-- <h1 class="movie-details-header"><%#= movie.title %></h1> -->
+    <img class="movie-details-header-img" src="<%= movie.bannerUrl %>" alt="<%= movie.title %> banner image">
+    <hr>
+    <div class="row">
+        <div class="col-md-6 showtimes-card-col-1">
+            <div class="row">
+                <div class="col-sm-5">
+                    <img id="movie-details-img" src="<%= movie.posterUrl %>" alt="<%= movie.title %> poster">
+                </div>
+                <div class="col-sm-7">
+                    <p>Run Time: 140min</p>
+                    <p>Directed By: Frank Capra</p>
+                    <p>Starring: Clark Gable, Claudette Colbert, Alan Hale</p>
+                    <p>A young heiress runs away from her overbearing father, and meets a journalist who takes interest in her for the story, and they embark on an epic journey up the east coast.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 showtimes-card-col-2">
+            <ul class="showtimes-list">
+                <% for(let showdate of Object.keys(sortedShowtimes)){ %>
+                    <li><%= showdate %>
+                        <ul class="showtime-times-ul">
+                            <% for(let showtime of sortedShowtimes[showdate]){ %>
+                                <li class="showtime-time"><%= showtime %></li>
+                            <% } %>
+                        </ul>
+                    </li>
+                <% } %>
+            </ul>
+            <form action="/movies/<%= movie.id %>?_method=DELETE" method="post">
+                <button>Delete Movie</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <a href="/movies/<%= movie.id %>/edit">Edit Movie</a>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,30 @@
-/* #image-on-details-view {
+.card-img-overlay {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, .5);
+    transition: all 1s;
+    text-align: center;
+}
+
+.card:hover .card-img-overlay{
+    opacity: 1;
+}
+
+.card-title {
+    font-size: 1.8em;
+}
+
+.ratio-3x2 {
+    --aspect-ratio: 150%;
+}
+
+.movie-details-header-img {
     width: 100%;
-} */
+    text-align: center;
+}
+
+#movie-details-img {
+    width: 100%;
+}
 
 /* .showtimes-card {
     border: 2px solid red;

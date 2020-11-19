@@ -59,11 +59,10 @@ app.post('/movies/new', async (req, res) => {
 });
 //SHOW
 app.get("/movies/:id", async (req, res) => {
-    const foundMovie = await Movie.findById(req.params.id);
-    let showtimes = dateFunctions.stringArrayToDateArray(foundMovie.showtimes);
+    const movie = await Movie.findById(req.params.id);
+    let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
     let sortedShowtimes = dateFunctions.sortShowtimesByDate(showtimes);
-    foundMovie.showtimes = sortedShowtimes;
-    res.render("movies/show", {foundMovie, sortedShowtimes});
+    res.render("movies/show", {movie, sortedShowtimes});
 });
 app.get("/movies", async (req, res) => {
     const allMovies = await Movie.find();
