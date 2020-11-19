@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <h1>Showtimes</h1>
-<% allMovies.forEach(movie => { %>
-    <%- include("../partials/showtimesCard.ejs", {movie, showtimesByDate: sortedShowtimes[movie.id], detailed: false}) %>
+<% allMovies.forEach((movie, i) => { %>
+<% let isFirst = i === 0 ? true : false %> 
+    <%- include("../partials/showtimesCard.ejs", {movie, showtimesByDate: sortedShowtimes[movie.id], detailed: false, withStylesheet: isFirst}) %>
 <% }) %>

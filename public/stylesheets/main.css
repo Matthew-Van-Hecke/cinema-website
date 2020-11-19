@@ -36,35 +36,7 @@
     padding-top: 90px;;
 }
 
-#image-on-details-view {
-    width: 100%;
-}
 
-.showtimes-card {
-    border: 2px solid red;
-    margin-bottom: 5em;
-    padding-right: 4em;
-}
-
-.showtimes-card img {
-    width:80%;
-}
-
-.showtimes {
-    list-style: none;
-    font-weight: 700;
-    border-left: 1px solid grey;
-}
-
-.showtime-times-ul {
-    list-style: none;
-    font-weight: 400;
-}
-
-.showtimes-card-col-1 {
-    text-align: center;
-    border-right: 2px solid grey;
-}
 .blog-post {
     border: 2px solid grey;
 }
