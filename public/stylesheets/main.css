@@ -1,8 +1,6 @@
 .navbar-nav {
     width: 100%;
     padding-bottom: 0;
-    /* padding-top: 130px; */
-    /* display: flex; */
     justify-content: space-evenly;
     z-index: 5;
 }
@@ -18,6 +16,7 @@
 }
 
 #home-link-mobile{
+    color: #888888;
     font-weight: bold;
 }
 

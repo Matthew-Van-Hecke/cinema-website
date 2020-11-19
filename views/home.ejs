@@ -13,10 +13,10 @@
     <div class="carousel-inner">
         <% allMovies.forEach((movie, i) => { %>
             <% if(i === 0){ %>
-                <div class="carousel-item active">
+                <div class="carousel-item active ratio ratio-16x9">
                 
             <% } else { %>
-                <div class="carousel-item">
+                <div class="carousel-item ratio ratio-16x9">
             <% } %>
                     <a href="/movies/<%= movie._id %>">
                         <img src="<%= movie.bannerUrl %>" class="d-block w-100" alt="<%= movie.title %>">
