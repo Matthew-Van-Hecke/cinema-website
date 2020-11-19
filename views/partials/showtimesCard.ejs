@@ -1,14 +1,21 @@
 <% if(withStylesheet){ %>
     <link rel="stylesheet" href="/stylesheets/showtimesCard.css">
 <% } %>
-<div class="showtimes-card">
-    <div class="row">
+<div class="showtimes-card col-sm-6 col-md-4">
+    <div class="card">
+        <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> Poster" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title"><%= movie.title %></h5>
+            <a href="movies/<%= movie._id %>" class="btn btn-primary">Details</a>
+        </div>
+    </div>
+    <!-- <div class="row">
         <div class="col-md-6 showtimes-card-col-1">
-            <h3 class="movie-title"><%= movie.title %></h3>
-            <% if(detailed){ %>
+            <h3 class="movie-title"><%#= movie.title %></h3>
+            <%# if(detailed){ %>
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> poster">
+                        <img src="<%#= movie.posterUrl %>" alt="<%#= movie.title %> poster">
                     </div>
                     <div class="col-md-6">
                         <p>Run Time: 140min</p>
@@ -17,28 +24,28 @@
                         <p>A young heiress runs away from her overbearing father, and meets a journalist who takes interest in her for the story, and they embark on an epic journey up the east coast.</p>
                     </div>
                 </div>
-            <% } else { %>
-                <img src="<%= movie.bannerUrl %>" alt="<%= movie.title %> banner">
-            <% } %>
+            <%# } else { %>
+                <img src="<%#= movie.bannerUrl %>" alt="<%#= movie.title %> banner">
+            <%# } %>
         </div>
         <div class="col-md-6 showtimes-card-col-2">
             <ul class="showtimes-list">
-                <% for(let showdate of Object.keys(showtimesByDate)){ %>
-                    <li><%= showdate %>
+                <%# for(let showdate of Object.keys(showtimesByDate)){ %>
+                    <li><%#= showdate %>
                         <ul class="showtime-times-ul">
-                            <% for(let showtime of showtimesByDate[showdate]){ %>
-                                <li class="showtime-time"><%= showtime %></li>
-                            <% } %>
+                            <%# for(let showtime of showtimesByDate[showdate]){ %>
+                                <li class="showtime-time"><%#= showtime %></li>
+                            <%# } %>
                         </ul>
                     </li>
-                <% } %>
+                <%# } %>
             </ul>
-            <form action="/movies/<%= movie.id %>?_method=DELETE" method="post">
+            <form action="/movies/<%#= movie.id %>?_method=DELETE" method="post">
                 <button>Delete Movie</button>
             </form>
         </div>
         <div class="col-md-6">
-            <a href="/movies/<%= movie.id %>/edit">Edit Movie</a>
+            <a href="/movies/<%#= movie.id %>/edit">Edit Movie</a>
         </div>
-    </div>
+    </div> -->
 </div>
