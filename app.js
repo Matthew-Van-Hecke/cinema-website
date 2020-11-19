@@ -153,12 +153,12 @@ app.post("/blog", async (req, res) => {
     res.redirect("/blog");
 });
 
-// Not Found
-app.get("*", (req, res) => {
-    console.log("Page not found.");
-    res.render("not-found", {url: req.originalUrl});
-    // res.send(req.originalUrl);
-});
+// // Not Found
+// app.get("*", (req, res) => {
+//     console.log("Page not found.");
+//     res.render("not-found", {url: req.originalUrl});
+//     // res.send(req.originalUrl);
+// });
 
 app.listen(3000, () => {
     console.log("---Server is running---");

@@ -5,23 +5,26 @@
     <input type="hidden" name="id" value="<%= foundMovie.id %>">
     <input type="hidden" name="posterUrl" value="<%= foundMovie.posterUrl %>">
     <input type="hidden" name="bannerUrl" value="<%= foundMovie.bannerUrl %>">
-    <input class="form-control" type="text" name="title" id="movie-title" value="<%= foundMovie.title %>">
-    <div class="form-group">
-        <label for="movie-banner">Banner Image</label>
+    <div class="form-group pb-3">
+        <label for="movie-title">Title</label>
+        <input class="form-control" type="text" name="title" id="movie-title" value="<%= foundMovie.title %>">
+    </div>
+    <div class="form-group pb-3">
+        <label for="movie-banner" class="form-label">Banner Image</label>
         <input class="form-control" type="file" name="banner" id="movie-banner">
     </div>
-    <div class="form-group">
-        <label for="movie-poster">Poster Image</label>
+    <div class="form-group pb-3">
+        <label for="movie-poster" class="form-label">Poster Image</label>
         <input class="form-control" type="file" name="poster" id="movie-poster">
     </div>
-    <div class="form-group" id="showtimes-div">
+    <button class="btn btn-primary mb-3" type="button" onclick="addShowtime()">Add Showtime</button>
+    <div class="form-group pb-3" id="showtimes-div">
         <% foundMovie.showtimes.forEach((showtime, i) => { %>
-            <div class="showtime form-control" id="showtime-<%= i %>">
-                <button type="button" <%= `onclick="removeShowtime(${i})"` %>>X</button>
-                <input type="datetime-local" name="showtime-<%= i %>" value="<%= showtime %>">
+            <div class="showtime input-group mb-3" id="showtime-<%= i %>">
+                <button type="button" class="input-group-text" <%= `onclick="removeShowtime(${i})"` %>>X</button>
+                <input type="datetime-local" class="form-control" name="showtime-<%= i %>" value="<%= showtime %>">
             </div>
         <% }) %>
     </div>
-    <input class="form-control" type="submit">
+    <input class="form-control btn btn-success" type="submit">
 </form>
-<button onclick="addShowtime()">Add Showtime</button>
