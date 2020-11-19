@@ -1,5 +1,5 @@
 const express = require('express');
-const { urlencoded } = require('body-parser');
+// const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
@@ -20,7 +20,7 @@ app.engine("ejs", ejsMate);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(upload());
 app.use(methodOverride('_method'));
@@ -40,8 +40,11 @@ app.get('/movies/new', (req, res) => {
 });
 //CREATE
 app.post('/movies/new', async (req, res) => {
+    console.log("IN THE POST ROUTE");
+    console.log(req.files);
     if(req.files){
-        let title = req.body.title;
+        const {title, runtime, director, starring, mpaa} = req.body;
+        console.log(req.body);
         let banner = req.files.banner;
         let poster = req.files.poster;
         let bannerFindPath = '/media/banners/' + banner.name;
@@ -52,7 +55,7 @@ app.post('/movies/new', async (req, res) => {
         console.log(showtimes);
         fileManagementFunctions.moveFile(banner, bannerSavePath);
         fileManagementFunctions.moveFile(poster, posterSavePath);
-        const newMovie = await Movie.create({title: title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, showtimes})
+        const newMovie = await Movie.create({title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, runtime, director, starring, mpaa, showtimes})
         console.log(newMovie);
     }
     res.redirect('/');

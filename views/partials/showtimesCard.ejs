@@ -6,10 +6,10 @@
         <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> Poster" class="card-img">
         <div class="card-img-overlay">
             <h5 class="card-title"><%= movie.title %></h5>
-            <p>Run Time: 140min</p>
-            <p>Directed By: Frank Capra</p>
-            <p>Starring: Clark Gable, Claudette Colbert, Alan Hale</p>
-            <p>MPAA Rating: NR</p>
+            <p>Run Time: <%= movie.runtime %></p>
+            <p>Directed By: <%= movie.director %></p>
+            <p>Starring: <%= movie.starring %></p>
+            <p>MPAA Rating: <%= movie.mpaa %></p>
             <a href="movies/<%= movie._id %>" class="btn btn-primary">Details</a>
         </div>
     </div>
