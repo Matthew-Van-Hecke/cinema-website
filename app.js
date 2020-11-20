@@ -1,5 +1,4 @@
 const express = require('express');
-// const { urlencoded } = require('body-parser');
 const upload = require('express-fileupload');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
@@ -105,8 +104,8 @@ app.put("/movies/:id", async (req, res) => {
     res.redirect(`/movies/${req.params.id}`);
 });
 // DESTROY
-app.delete("/movies/:id", (req, res) => {
-    const movie = Movie.findById(req.params.id);
+app.delete("/movies/:id", async (req, res) => {
+    const movie = await Movie.findById(req.params.id);
     fs.unlink(`public/${movie.bannerUrl}`, () => {
         console.log("Removed banner image");
     });
