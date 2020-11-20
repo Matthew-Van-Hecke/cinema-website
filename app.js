@@ -42,10 +42,8 @@ app.post('/movies/new', async (req, res) => {
     console.log("IN THE POST ROUTE");
     console.log(req.files);
     if(req.files){
-        const {title, runtime, director, starring, mpaa} = req.body;
-        console.log(req.body);
-        let banner = req.files.banner;
-        let poster = req.files.poster;
+        const {title, runtime, director, starring, mpaa, synopsis} = req.body;
+        const {banner, poster} = req.files;
         let bannerFindPath = '/media/banners/' + banner.name;
         let bannerSavePath = './public' + bannerFindPath;
         let posterFindPath = '/media/posters/' + poster.name;
@@ -54,7 +52,7 @@ app.post('/movies/new', async (req, res) => {
         console.log(showtimes);
         fileManagementFunctions.moveFile(banner, bannerSavePath);
         fileManagementFunctions.moveFile(poster, posterSavePath);
-        const newMovie = await Movie.create({title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, runtime, director, starring, mpaa, showtimes})
+        const newMovie = await Movie.create({title, bannerUrl: bannerFindPath, posterUrl: posterFindPath, runtime, director, starring, mpaa, synopsis, showtimes})
         console.log(newMovie);
     }
     res.redirect('/');
@@ -83,8 +81,8 @@ app.get("/movies/:id/edit", async (req, res) => {
 // UPDATE
 app.put("/movies/:id", async (req, res) => {
     const showtimes = formProcessingFunctions.getShowtimesArray(req.body);
-    const {title, runtime, director, starring, mpaa} = req.body;
-    const newData = {title, showtimes, runtime, director, starring, mpaa};
+    const {title, runtime, director, starring, mpaa, synopsis} = req.body;
+    const newData = {title, showtimes, runtime, director, starring, mpaa, synopsis};
     if(req.files && req.files.poster){
         const poster = req.files.poster;
         console.log("POSTER");

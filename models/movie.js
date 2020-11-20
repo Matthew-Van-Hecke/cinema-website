@@ -22,7 +22,11 @@ const movieSchema = new mongoose.Schema({
     },
     showtimes: [
         String
-    ]
+    ],
+    synopsis: {
+        type: String,
+        default: "A retired jewel thief sets out to prove his innocence after being suspected of returning to his former occupation."
+    }
 });
 
 module.exports = mongoose.model("Movie", movieSchema);
