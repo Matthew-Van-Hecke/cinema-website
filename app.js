@@ -83,7 +83,8 @@ app.get("/movies/:id/edit", async (req, res) => {
 // UPDATE
 app.put("/movies/:id", async (req, res) => {
     const showtimes = formProcessingFunctions.getShowtimesArray(req.body);
-    const newData = {title: req.body.title, showtimes};
+    const {title, runtime, director, starring, mpaa} = req.body;
+    const newData = {title, showtimes, runtime, director, starring, mpaa};
     if(req.files && req.files.poster){
         const poster = req.files.poster;
         console.log("POSTER");
