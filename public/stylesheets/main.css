@@ -13,11 +13,21 @@ body {
 .nav-item {
     font-size: 1.5em;
     height: 2.5em;
+    border-radius: 0 0 15px 15px;
+}
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, .4);
 }
 
 #home-link{
     transform: translateY(-50px);
     perspective: 500px;
+}
+#home-link:hover {
+    background-color: rgba(255, 255, 255, 0);
+}
+#home-link:hover #cinema-logo {
+    filter: invert(0.7);
 }
 
 #home-link-mobile{
@@ -40,7 +50,6 @@ body {
 .container.main-content {
     padding-top: 90px;;
 }
-
 
 .blog-post {
     border: 2px solid grey;
