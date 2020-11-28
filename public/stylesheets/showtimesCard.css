@@ -25,6 +25,10 @@ hr {
     width: 100%;
 }
 
+.movie-details-header-img {
+    /* filter: blur(8px); */
+}
+
 /* .showtimes-card {
     border: 2px solid red;
     margin-bottom: 5em;
