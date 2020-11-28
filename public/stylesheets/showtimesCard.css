@@ -17,9 +17,8 @@
     --aspect-ratio: 150%;
 }
 
-.movie-details-header-img {
-    width: 100%;
-    text-align: center;
+hr {
+    border-top: 2px solid #fff;
 }
 
 #movie-details-img {

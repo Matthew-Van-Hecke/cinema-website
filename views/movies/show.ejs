@@ -3,13 +3,14 @@
 <link rel="stylesheet" href="/stylesheets/showtimesCard.css">
 
 <div class="movie-details">
-    <!-- <h1 class="movie-details-header"><%#= movie.title %></h1> -->
-    <img class="movie-details-header-img" src="<%= movie.bannerUrl %>" alt="<%= movie.title %> banner image">
+    <div class="row">
+        <img class="movie-details-header-img col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3" src="<%= movie.bannerUrl %>" alt="<%= movie.title %> banner image">
+    </div>
     <hr>
     <div class="row">
         <div class="col-md-6 showtimes-card-col-1">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-5 d-none d-md-block">
                     <img id="movie-details-img" src="<%= movie.posterUrl %>" alt="<%= movie.title %> poster">
                 </div>
                 <div class="col-sm-7">
@@ -19,6 +20,7 @@
                     <p>MPAA Rating: <%= movie.mpaa %></p>
                     <p><%= movie.synopsis %></p>
                 </div>
+                <hr class="d-md-none">
             </div>
         </div>
         <div class="col-md-6 showtimes-card-col-2">
@@ -37,9 +39,6 @@
             <form class="d-inline" action="/movies/<%= movie.id %>?_method=DELETE" method="post">
                 <button class="btn btn-danger">Delete Movie</button>
             </form>
-        </div>
-        <div class="col-md-6">
-            
         </div>
     </div>
 </div>
