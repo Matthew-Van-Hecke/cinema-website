@@ -157,7 +157,7 @@ app.all("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-    res.send("Oops! Something went wrong.");
+    res.render("error", err);
 });
 
 app.listen(3000, () => {
