@@ -6,6 +6,7 @@ const fs = require('fs');
 const methodOverride = require('method-override');
 const path = require('path');
 const ExpressError = require('./utils/expressError');
+const asyncCatch = require('./utils/asyncCatch');
 const formProcessingFunctions = require('./helperFunctions/formProcessingFunctions');
 const dateFunctions = require('./helperFunctions/dateFunctions');
 const fileManagementFunctions = require('./helperFunctions/fileManagementFunctions');
@@ -59,12 +60,12 @@ app.post('/movies/new', async (req, res) => {
     res.redirect('/');
 });
 //SHOW
-app.get("/movies/:id", async (req, res) => {
+app.get("/movies/:id", asyncCatch(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     let showtimes = dateFunctions.stringArrayToDateArray(movie.showtimes);
     let sortedShowtimes = dateFunctions.sortShowtimesByDate(showtimes);
     res.render("movies/show", {movie, sortedShowtimes});
-});
+}));
 app.get("/movies", async (req, res) => {
     const allMovies = await Movie.find();
     let sortedShowtimes = {};
@@ -158,7 +159,7 @@ app.all("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-    const { statusCode } = err;
+    const { statusCode = 500 } = err;
     res.status(statusCode).render("error", { err });
 });
 
