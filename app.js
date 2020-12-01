@@ -5,6 +5,7 @@ const ejsMate = require('ejs-mate');
 const fs = require('fs');
 const methodOverride = require('method-override');
 const path = require('path');
+const ExpressError = require('./utils/expressError');
 const formProcessingFunctions = require('./helperFunctions/formProcessingFunctions');
 const dateFunctions = require('./helperFunctions/dateFunctions');
 const fileManagementFunctions = require('./helperFunctions/fileManagementFunctions');
@@ -153,11 +154,12 @@ app.post("/blog", async (req, res) => {
     res.redirect("/blog");
 });
 app.all("*", (req, res) => {
-    throw new Error("Cannot find route");
+    throw new ExpressError(`Error! ${req.path} not found`, 404);
 });
 
 app.use((err, req, res, next) => {
-    res.render("error", err);
+    const { statusCode } = err;
+    res.status(statusCode).render("error", { err });
 });
 
 app.listen(3000, () => {
