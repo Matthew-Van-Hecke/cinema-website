@@ -152,13 +152,13 @@ app.post("/blog", async (req, res) => {
     console.log(blogPost);
     res.redirect("/blog");
 });
+app.all("*", (req, res) => {
+    throw new Error("Cannot find route");
+});
 
-// // Not Found
-// app.get("*", (req, res) => {
-//     console.log("Page not found.");
-//     res.render("not-found", {url: req.originalUrl});
-//     // res.send(req.originalUrl);
-// });
+app.use((err, req, res, next) => {
+    res.send("Oops! Something went wrong.");
+});
 
 app.listen(3000, () => {
     console.log("---Server is running---");
