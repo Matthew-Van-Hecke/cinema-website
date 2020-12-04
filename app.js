@@ -11,9 +11,9 @@ const asyncCatch = require('./utils/asyncCatch');
 
 const Movie = require('./models/movie');
 const PageContent = require('./models/pageContent');
-const BlogPost = require('./models/blogPost');
 
 const movieRoutes = require('./routes/movieRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
 
@@ -36,6 +36,7 @@ app.get('/', async (req, res) => {
 });
 
 app.use('/movies', movieRoutes);
+app.use('/blog', blogRoutes);
 
 app.get("/about", asyncCatch(async (req, res) => {
     const content = await PageContent.findOne({pageName: "about"});
@@ -59,22 +60,7 @@ app.get("/contact", asyncCatch(async (req, res) => {
     const pageContent = await PageContent.findOne({pageName: "contact"});
     res.render("contact", {pageContent});
 }));
-//LIST Blog
-app.get("/blog", asyncCatch(async (req, res) => {
-    const posts = await BlogPost.find();
-    res.render("blog/list", {posts});
-}));
-//NEW Blogpost
-app.get("/blog/new", (req, res) => {
-    res.render("blog/new");
-});
-//Create Blogpost
-app.post("/blog", asyncCatch(async (req, res) => {
-    const {title, author, content} = req.body;
-    const blogPost = await BlogPost.create({title, author, content});
-    console.log(blogPost);
-    res.redirect("/blog");
-}));
+
 app.all("*", (req, res) => {
     throw new ExpressError(`Error! ${req.path} not found`, 404);
 });
