@@ -4,9 +4,7 @@ const router = express.Router();
 
 const Movie = require('../models/movie');
 
-const dateFunctions = require('../helperFunctions/dateFunctions');
-const formProcessingFunctions = require('../helperFunctions/formProcessingFunctions');
-const fileManagementFunctions = require('../helperFunctions/fileManagementFunctions');
+const { dateFunctions, fileManagementFunctions, formProcessingFunctions } = require('../utils');
 const asyncCatch = require('../utils/asyncCatch');
 
 //NEW
@@ -20,15 +18,6 @@ router.post('/new', asyncCatch(async (req, res, next) => {
     if(req.files){
         const {title, runtime, director, starring, mpaa, synopsis} = req.body;
         const {banner, poster} = req.files;
-        // const movieToValidate = {title, banner, poster, director, starring, mpaa, synopsis};
-        // const {error} = movieSchema.validate(movieToValidate);
-        // console.log("BANNER mv DATA TYPE");
-        // console.log(banner.mv);
-        // if(error){
-        //     console.log("ERROR!!!!");
-        //     console.log(error);
-        //     next(error.details[0]);
-        // }
         let bannerFindPath = '/media/banners/' + banner.name;
         let bannerSavePath = './public' + bannerFindPath;
         let posterFindPath = '/media/posters/' + poster.name;
@@ -85,7 +74,7 @@ router.put("/:id", asyncCatch(async (req, res) => {
         newData.bannerUrl = bannerFindPath;
     }
     await Movie.findByIdAndUpdate(req.params.id, newData, {useFindAndModify: false, runValidators: true});
-    res.redirect(`movies/${req.params.id}`);
+    res.redirect(`/movies/${req.params.id}`);
 }));
 // DESTROY
 router.delete("/:id", asyncCatch(async (req, res) => {
